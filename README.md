@@ -5,13 +5,13 @@ This is a mutli-agent shopping system similar to a recommendation engine. This s
 1. Clone the repo
 2. Create and activate a python environment: <br>
 
-   Linux:
+Linux:
 ```
 virtualenv venv
 source venv/bin/activate
 ```
 
-   Windows:
+Windows:
 ```
 virtualenv venv
 .\venv\bin\activate
