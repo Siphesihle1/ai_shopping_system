@@ -9,7 +9,7 @@ Linux:
 virtualenv venv
 source venv/bin/activate
 ```
-<br>
+
 Windows:
 ```
 virtualenv venv
@@ -24,7 +24,7 @@ pip install -r requirements.txt
 4. Go to setting.py and change the database connection details
    - Change 'localhost' to '148.100.79.67'
 
-** Don't forget to push your latest changes to the repo **
+**Don't forget to push your latest changes to the repo**
 
 # Database Connection Details
 - HOST : 148.100.79.67
