@@ -31,5 +31,6 @@ pip install -r requirements.txt
 - HOST : 148.100.79.67
 - ENGINE : django.db.backends.postgresql_psycopg2
 - NAME : ai_shopping_system
+- USER : dbadmin
 - PASSWORD : admin12345
 - PORT : 5432
