@@ -13,10 +13,10 @@ This is a mutli-agent shopping system similar to a recommendation engine. This s
    <code>.\venv\bin\activate</code>
 
 3. Go to the project directory and install all the required dependencies <br><br>
-  <code>pip install -r requirements</code>
+  <code>pip install -r requirements.txt</code>
 
 4. Go to setting.py and change the database connection details
-     - Change 'localhost' to '148.100.79.67'
+   - Change 'localhost' to '148.100.79.67'
 
 # Database Connection Details
 - HOST : 148.100.79.67
