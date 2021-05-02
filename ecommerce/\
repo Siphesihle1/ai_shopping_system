@@ -7,7 +7,7 @@ import json
 import datetime        
 
 # Django Login
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -30,17 +30,14 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
-@with_ip_geolocation
 def store(request):
     if request.user.is_authenticated:
         u = request.user
         customer = Customer.objects.get(user_id=u.id)
         
         # Get the user's location
-        location = request.geolocation
-        customer.latitude = location["geo"]["latitude"]
-        customer.longitude = location["geo"]["longitude"]
-        u.save()
+        customer.latitude = location.geo["latitude"]
+        customer.longitude = location.geo["longitude"]
 
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
@@ -77,7 +74,8 @@ def checkout(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
-        total = order.get_cart_total
+        cart = Cart(request)
+        total = sum([float(value['price']) for key,value in cart.cart.items()])
 
         context = {'items':items, 'order':order, 'cartItems':cartItems, 'total':total}
         return render(request, 'ecommerce/checkout.html', context)
@@ -155,24 +153,19 @@ def signup(request):
         customer_form = CustomerForm(request.POST)
 
         if user_form.is_valid() and customer_form.is_valid():
-            
             user = user_form.save()
-            user.refresh_from_db() # reloading the database
-            user.customer.cellphone_no = customer_form.cleaned_data['cellphone_no']
-            user.set_password(user_form.cleaned_data['password1'])
-            user.save()
-
+            customer_form = CustomerForm(request.POST, user.customer)
+            customer_form.save()
             messages.success(request, f'Your account has been created! You are now able to login')
             return redirect('login')
         else:
-            context = {'user_form' : user_form, 'customer_form': customer_form}
-            return render(request, 'ecommerce/signup.html', context)
+            messages.error(request, f'Please correct the error below')
     else:
         user_form = UserForm()
         customer_form = CustomerForm()
 
-        context = {'user_form' : user_form, 'customer_form': customer_form}
-        return render(request, 'ecommerce/signup.html', context)
+    context = {'user_form' : user_form, 'customer_form': customer_form}
+    return render(request, 'ecommerce/signup.html', context)
 
 def Login(request):
 
@@ -180,28 +173,26 @@ def Login(request):
         return redirect('store')
     else:
         if request.method == 'POST':
-
             login_form = LoginForm(request.POST)
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+            
+            username = login_form.fields['username']
+            password = login_form.fields['password']
 
-            user = authenticate(request, username=username, password=password)
+            #username = request.POST.get('username')
+            #password =request.POST.get('password')
+
+            user = authenticate(request, user=username, password=password)
 
             if user is not None:
                 login(request, user)
+                messages.success(request, f'Welcome {username}!!');
                 return redirect('store')
             else:
-                messages.error(request, 'Username OR password is incorrect')
-                return render(request, 'ecommerce/login.html', {'form' : login_form})
+                for field in login_form.fields:
+                    login_form[field].field.widget.attrs['class'] += ' error'
 
-        else:
-            login_form = LoginForm();
-            context = {'form' : login_form}
-            return render(request, 'ecommerce/login.html', context)
+                messages.info(request, 'Username OR password is incorrect')
 
-@login_required
-def Logout(request):
-    
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect('store')
+        login_form = LoginForm();
+        context = {'form' : login_form}
+        return render(request, 'ecommerce/login.html', context)

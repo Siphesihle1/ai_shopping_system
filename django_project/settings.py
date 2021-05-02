@@ -32,43 +32,43 @@ ALLOWED_HOSTS = ['148.100.79.67']
 # Application definition
 
 INSTALLED_APPS = [
-
-    'ecommerce.apps.EcommerceConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
+        'ecommerce.apps.EcommerceConfig',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django_ip_geolocation.middleware.IpGeolocationMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        ]
 
 ROOT_URLCONF = 'django_project.urls'
 
 TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'context_processors': [
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.request',
+                    'django.contrib.auth.context_processors.auth',
+                    'django.contrib.messages.context_processors.messages',
+                    ],
+                },
+            },
+        ]
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
@@ -84,35 +84,35 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 }"""
 
 DATABASES = {
-    'default' : {
-        'ENGINE' : 'django.db.backends.postgresql_psycopg2',
-        'NAME' : 'ai_shopping_system',
-        'USER' : 'dbadmin',
-        'PASSWORD' : 'admin12345',
-        'HOST' : 'localhost',
-        'PORT' : '',
-    }    
-        
-}
+        'default' : {
+            'ENGINE' : 'django.db.backends.postgresql_psycopg2',
+            'NAME' : 'ai_shopping_system',
+            'USER' : 'dbadmin',
+            'PASSWORD' : 'admin12345',
+            'HOST' : 'localhost',
+            'PORT' : '5432',
+            }    
+
+        }
 
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
-]
+        {
+            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+            },
+        {
+            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+            },
+        {
+            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+            },
+        {
+            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+            },
+        ]
 
 
 # Internationalization
@@ -135,8 +135,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
-]
+        os.path.join(BASE_DIR, 'static')
+        ]
 
 MEDIA_URL = '/ecommerce/'
 
@@ -146,3 +146,32 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ecommerce')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Geolocation settings
+P_GEOLOCATION_SETTINGS = {
+        'BACKEND': 'django_ip_geolocation.backends.IPGeolocationAPI',
+        'BACKEND_API_KEY': '',
+        'BACKEND_EXTRA_PARAMS': {},
+        'BACKEND_USERNAME': '',
+        'RESPONSE_HEADER': 'X-IP-Geolocation',
+        'ENABLE_REQUEST_HOOK': True,
+        'ENABLE_RESPONSE_HOOK': True,
+        'ENABLE_COOKIE': False,
+        'FORCE_IP_ADDR': None,
+        'USER_CONSENT_VALIDATOR': None
+        }
+
+# Login URLs
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL='/store/'
+
+# Message tags
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',        
+}
