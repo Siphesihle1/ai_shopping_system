@@ -4,27 +4,27 @@ This is a mutli-agent shopping system similar to a recommendation engine. This s
 # Steps to run the app on your local machine
 1. Clone the repo
 2. Create and activate a python environment: <br><br>
-   Linux:
-   ```
-   virtualenv venv
-   source venv/bin/activate
-   ```
-   <br>
-   Windows:
-   ```
-   virtualenv venv
-   .\venv\bin\activate
-   ```
+Linux:
+```
+virtualenv venv
+source venv/bin/activate
+```
+<br>
+Windows:
+```
+virtualenv venv
+.\venv\bin\activate
+```
 
 3. Go to the project directory and install all the required dependencies <br><br>
-  ```
-  pip install -r requirements.txt
-  ```
+```
+pip install -r requirements.txt
+```
 
 4. Go to setting.py and change the database connection details
    - Change 'localhost' to '148.100.79.67'
 
-** Don't forget to push your latest changes to the repo
+** Don't forget to push your latest changes to the repo **
 
 # Database Connection Details
 - HOST : 148.100.79.67
