@@ -18,7 +18,7 @@ This is a mutli-agent shopping system similar to a recommendation engine. This s
 4. Go to setting.py and change the database connection details
    - Change 'localhost' to '148.100.79.67'
 
-# Don't forget to push your latest changes to the repo
+* Don't forget to push your latest changes to the repo
 
 # Database Connection Details
 - HOST : 148.100.79.67
