@@ -4,6 +4,7 @@ This is a mutli-agent shopping system similar to a recommendation engine. This s
 # Steps to run the app on your local machine
 1. Clone the repo
 2. Create and activate a python environment: <br><br>
+
 Linux:
 ```
 virtualenv venv
@@ -16,7 +17,7 @@ virtualenv venv
 .\venv\bin\activate
 ```
 
-3. Go to the project directory and install all the required dependencies <br><br>
+3. Go to the project directory and install all the required dependencies
 ```
 pip install -r requirements.txt
 ```
