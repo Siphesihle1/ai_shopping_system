@@ -9,6 +9,7 @@ cd ai_shopping_system
 ```
 
 3. Create and activate a python environment (you need to have python and virtualenv installed): <br>
+
 Linux:
 ```
 virtualenv venv
@@ -39,7 +40,7 @@ Linux:
 ./ecommerce/migrations/__pycache__/
 ```
 
-3. Install all the required dependencies
+3. Install all the required dependencies <br>
 ```
 pip install -r requirements.txt
 ```
@@ -64,7 +65,7 @@ git add file_1 file_2 ... file_n
 ```
 git commit -m <comment>
 # <comment> should describe the changes you made
-# e.g Removd line 5
+# e.g Removed line 5
 ```
 
 3. Push your changes to the repository <br>
