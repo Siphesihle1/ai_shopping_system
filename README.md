@@ -1,4 +1,7 @@
 [![Build Status](https://travis-ci.com/Siphesihle1/ai_shopping_system.svg?branch=master)](https://travis-ci.com/Siphesihle1/ai_shopping_system)
+
+[![Coverage Status](https://coveralls.io/repos/github/Siphesihle1/ai_shopping_system/badge.svg)](https://coveralls.io/github/Siphesihle1/ai_shopping_system)
+
 # AI Shopping System
 This is a mutli-agent shopping system similar to a recommendation engine. This system studies the user's search patterns, search history and purchase history and uses this information to provide the user with customised search results across various product categories.
 
