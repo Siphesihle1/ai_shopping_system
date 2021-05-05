@@ -53,12 +53,17 @@ class CustomerForm(ModelForm):
     def clean(self):
         cellphone_no = self.cleaned_data.get('cellphone_no')
 
-        for digit in cellphone_no:
-            if not ( '0' <= digit <= '9'):
-                msg = "The cellphone number is invalid."
-                self.add_error('cellphone_no', msg)
-                raise forms.ValidationError(msg)
-
+        if (len(cellphone_no) != 10):
+            msg = "The cellphone number is invalid."
+            self.add_error('cellphone_no', msg)
+            raise forms.ValidationError(msg)
+        else:
+            for digit in cellphone_no:
+                if not ( '0' <= digit <= '9'):
+                    msg = "The cellphone number is invalid."
+                    self.add_error('cellphone_no', msg)
+                    raise forms.ValidationError(msg)
+        
         return self.cleaned_data
         
     class Meta:

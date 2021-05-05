@@ -38,9 +38,10 @@ def store(request):
         
         # Get the user's location
         location = request.geolocation
-        customer.latitude = location["geo"]["latitude"]
-        customer.longitude = location["geo"]["longitude"]
-        u.save()
+        if (location["geo"]):
+            customer.latitude = location["geo"]["latitude"]
+            customer.longitude = location["geo"]["longitude"]
+            u.save()
 
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
