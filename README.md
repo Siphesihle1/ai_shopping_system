@@ -61,14 +61,14 @@ pip install -r requirements.txt
 
 2. Stage your changes <br>
 ```
-git add file_1 file_2 ... file_n
+git add *
 ```
 
 3. Commit your changes <br>
 ```
 git commit -m <comment>
 # <comment> should describe the changes you made
-# e.g Removed line 5
+# e.g Removed line 5 in <file>
 ```
 
 4. Push your changes to the repository <br>
