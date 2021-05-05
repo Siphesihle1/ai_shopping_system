@@ -8,7 +8,7 @@ git clone https://github.com/Siphesihle1/ai_shopping_system
 cd ai_shopping_system
 ```
 
-3. Create and activate a python environment (you need to have python and virtualenv installed): <br>
+2. Create and activate a python environment (you need to have python and virtualenv installed): <br>
 
 Linux:
 ```
@@ -40,16 +40,16 @@ Linux:
 ./ecommerce/migrations/__pycache__/
 ```
 
-3. Install all the required dependencies <br>
+4. Install all the required dependencies <br>
 ```
 pip install -r requirements.txt
 ```
 
-4. Go to settings.py and change the database connection and host details
+5. Go to settings.py and change the database connection and host details
    - Change DATABASES["HOST"] from 'localhost' to '148.100.79.67'
    - Change ALLOWED_HOSTS[0] from '148.100.86.67' to 'localhost'
 
-5. Run <code>python manage.py runserver localhost:PORT</code>
+6. Run <code>python manage.py runserver localhost:PORT</code>
 
 # To push your changes to the repo do the following:
 1. Go to settings.py and change the database connection and host details
@@ -61,14 +61,14 @@ pip install -r requirements.txt
 git add file_1 file_2 ... file_n
 ```
 
-2. Commit your changes <br>
+3. Commit your changes <br>
 ```
 git commit -m <comment>
 # <comment> should describe the changes you made
 # e.g Removed line 5
 ```
 
-3. Push your changes to the repository <br>
+4. Push your changes to the repository <br>
 ```
 git push origin master
 ```
