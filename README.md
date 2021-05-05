@@ -26,7 +26,7 @@ virtualenv venv
 .\venv\bin\activate
 ```
 
-3. Add the the following lines to <code>./.git/info/exlude</code> or <code>.\\.git\info\exclude</code> <br>
+3. Add the the following lines to <code>./.git/info/exclude</code> or <code>.\\.git\info\exclude</code> <br>
 
 Windows:
 ```
