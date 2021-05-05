@@ -2,6 +2,8 @@
 # AI Shopping System
 This is a mutli-agent shopping system similar to a recommendation engine. This system studies the user's search patterns, search history and purchase history and uses this information to provide the user with customised search results across various product categories.
 
+URL: http://148.100.79.67
+
 # Steps to run the app on your local machine
 1. Clone the repo <br>
 ```
