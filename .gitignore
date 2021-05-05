@@ -1,4 +1,2 @@
-.\venv\
-.\django_project\__pycache__\
-.\ecommerce\__pycache__\
-.\ecommerce\migrations\__pycache__\
+*.pyc
+__pycache__
