@@ -108,12 +108,12 @@ def updateItem(request):
         elif action == 'remove':
             orderItem.quantity = (orderItem.quantity - 1)
 
-        orderItem.save()
-
         if orderItem.quantity <= 0:
             orderItem.delete()
+        else:
+            orderItem.save()
 
-        return JsonResponse('Item updated', safe=False)
+        return JsonResponse({'message': 'Item updated'}, safe=False)
     else:
         return redirect('login')
     
