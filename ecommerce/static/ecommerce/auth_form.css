@@ -1,10 +1,27 @@
-body,
+/*body,
 html {
 	margin: 0;
 	padding: 0;
 	height: 100%;
-	background: #7abecc !important;
+	background: #ffffff !important;
+}*/
+
+html, body {
+	margin: 0;
+	height: 100% !important;
 }
+
+.container {
+	margin-top: -90px;
+	height: 100%;
+}
+
+.user-card-container {
+	display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+}
+
 .user_card {
 	width: 350px;
 	margin-top: auto;
@@ -13,6 +30,7 @@ html {
 	position: relative;
 	display: flex;
 	justify-content: center;
+	align-items: center;
 	flex-direction: column;
 	padding: 10px;
 	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);

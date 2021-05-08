@@ -1,5 +1,8 @@
 {% extends 'ecommerce/main.html' %}
 {% load static %}
+
+{% block title%}Store{% endblock title%}
+
 {% block content %}
 
 <div class="row">
@@ -10,9 +13,9 @@
 				<h6><strong>{{product.name}}</strong></h6>
 				<hr>
 				{% if user.is_authenticated %}
-					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
 				{% endif %}
-				<a class="btn btn-outline-success" href="#">View</a>
+				<a data-product="{{product.id}}" data-action="view" class="btn btn-outline-success view-product-btn" href="#">View</a>
 				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
 
 			</div>
@@ -21,3 +24,8 @@
 </div>
 
 {% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'ecommerce/js/cart.js' %}"></script>
+<script type="text/javascript" src="{% static 'ecommerce/js/track.js' %}"></script>
+{% endblock javascript %}
