@@ -150,11 +150,11 @@ def processOrder(request):
     else:
         return redirect('login')
 
-@login_required
+"""@login_required
 def deletefromcart(request,id):
     Order.objects.filter(id=id).delete()
     messages.success(request, "Your item deleted form Shopcart.")
-    return render(request, 'ecommerce/checkout.html', context)
+    return render(request, 'ecommerce/checkout.html', context)"""
 
 def signup(request):
 
@@ -203,7 +203,7 @@ def Login(request):
                 return render(request, 'ecommerce/login.html', {'form' : login_form})
 
         else:
-            login_form = LoginForm();
+            login_form = LoginForm()
             context = {'form' : login_form}
             return render(request, 'ecommerce/login.html', context)
 
