@@ -29,7 +29,9 @@
 				<div style="flex:2"><strong>Item</strong></div>
 				<div style="flex:1"><strong>Price</strong></div>
 				<div style="flex:1"><strong>Quantity</strong></div>
+				<div style="flex:1"><strong>Action</strong></div>
 				<div style="flex:1"><strong>Total</strong></div>
+			
 			</div>
 			{% for item in items %}
 			<div class="cart-row">
@@ -44,7 +46,10 @@
 						<img data-product={{item.product.id}} data-action="remove" class="chg-quantity update-cart" src="{% static  'ecommerce/arrow-down.png' %}">
 					</div>
 				</div>
+				<div style="flex:1"><a> href="{% url 'deletefromcart' %}" class="btn btn-warning">x</a></div>
+				<!--<div style="flex:1"> <a  class="btn btn-danger" href="{% url 'deletefromcart' item.product.id %}"> x</a> <!--&#x2190; "?action=del" -->
 				<div style="flex:1"><p>{{item.get_total}}</p></div>
+		<!--<div style="flex:1"> <a class="text-right"><a href="ecommerce/deletefromcart/{{ product.id }}" onclick="return confirm('Delete ! Are you sure?')" class="main-btn icon-btn"><i class="fa fa-close"></i></a>-->
 			</div>
 			{% endfor %}
 		</div>

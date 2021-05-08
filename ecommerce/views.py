@@ -26,7 +26,7 @@ from django_ip_geolocation.decorators import with_ip_geolocation
 from .models import *
 from cart.cart import Cart
 from django.views.decorators.csrf import csrf_exempt
-
+from django.views.generic import View
 
 # Create your views here.
 
@@ -102,7 +102,7 @@ def updateItem(request):
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
         orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
+          
         if action == 'add':
             orderItem.quantity = (orderItem.quantity + 1)
         elif action == 'remove':
@@ -116,6 +116,7 @@ def updateItem(request):
         return JsonResponse({'message': 'Item updated'}, safe=False)
     else:
         return redirect('login')
+
     
 @csrf_exempt
 def processOrder(request):
@@ -148,6 +149,12 @@ def processOrder(request):
         return JsonResponse('Payment Complete', safe=False)
     else:
         return redirect('login')
+
+@login_required
+def deletefromcart(request,id):
+    Order.objects.filter(id=id).delete()
+    messages.success(request, "Your item deleted form Shopcart.")
+    return render(request, 'ecommerce/checkout.html', context)
 
 def signup(request):
 
