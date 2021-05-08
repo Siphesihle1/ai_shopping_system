@@ -1,4 +1,4 @@
-// ----- Update buttons functionality: main.html, cart.html, store.html --- //
+// ----- Update buttons functionality: cart.html, store.html --- //
 
 var updateBtns = document.getElementsByClassName('update-cart')
 
@@ -10,7 +10,7 @@ for (i=0; i < updateBtns.length; i++){
 		var action = this.dataset.action
 		
 		// Debugging
-		console.log('productId:', productId, 'Action:', action)
+		//console.log('productId:', productId, 'Action:', action)
 
 		// Send request to update user order
 		updateUserOrder(productId, action)
@@ -18,7 +18,7 @@ for (i=0; i < updateBtns.length; i++){
 }
 
 function updateUserOrder(productId, action){
-	console.log('user is authenticated, sending data...')
+	//console.log('user is authenticated, sending data...')
 
 	var url = '/update_item/'
 
@@ -35,26 +35,7 @@ function updateUserOrder(productId, action){
 		return response.json();
 	})
 	.then((data) => {
-		console.log(data["message"]);
+		//console.log(data["message"]);
 		location.reload();
 	});
 }
-
-
-
-var url = "/process_order/"
-fetch(url, {
-	method:'POST',
-	headers:{
-		'Content-Type':'application/json',
-		'X-CSRFToken':csrftoken,
-	},
-	body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
-
-})
-.then((response) => response.json())
-.then((data) => {
-	console.log('Success:', data);
-	alert('Transaction completed');
-	window.location.href = "{% url 'store' %}"
-})

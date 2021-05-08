@@ -1,5 +1,8 @@
 {% extends 'ecommerce/main.html' %}
 {% load static %}
+
+{% block title%}Cart{% endblock title%}
+
 {% block content %}
 <div class="row">
 	<div class="col-lg-12">
@@ -51,3 +54,7 @@
 	</div>
 </div>
 {% endblock content %}
+
+{% block javascript %}
+<script type="text/javascript" src="{% static 'ecommerce/js/cart.js' %}"></script>
+{% endblock javascript %}
