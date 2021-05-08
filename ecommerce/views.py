@@ -91,8 +91,8 @@ def updateItem(request):
         data=json.loads(request.body)
         productId = data['productId']
         action = data['action']
-        print('Action:', action)
-        print('Product:', productId)
+        #print('Action:', action)
+        #print('Product:', productId)
 
         u = request.user
         customer = Customer.objects.get(user_id=u.id)
@@ -150,29 +150,30 @@ def processOrder(request):
     else:
         return redirect('login')
 
-<<<<<<< HEAD
+
 @login_required
-def deletefromcart(request,id):
-    Order.objects.filter(id=id).delete()
-    messages.success(request, "Your item deleted form Shopcart.")
-    return render(request, 'ecommerce/checkout.html', context)
-=======
-@login_required
-def deletefromcart(request):
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    items = order.orderitem_set.all()
-    cartItems = order.get_cart_items
-    context = {'items':items, 'order':order, 'cartItems':cartItems}
+def deletefromcart(request, id):
     
-    if request.is_ajax and request.method == "GET":
-        # get the nick name from the client side.
-        product_id = request.GET.get("product_id", None)
-        # check for the nick name in the database.
-        Order.objects.filter(id=id).delete()
-        #messages.success(request, "Your item deleted form Shopcart.")
-        return JsonResponse({'message': 'Item removed.'}, safe=False)
-    return JsonResponse({}, status = 400)
->>>>>>> dfb47f1499205a41a35a699420d53799433008c0
+    # Get customer info
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+    product = Product.objects.get(id=id)
+
+    # Get the order item
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
+
+    # Delete the order item
+    if (orderItem):
+        orderItem.delete()
+    
+    # Get the new order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    items = order.orderitem_set.all()   
+    cartItems = order.get_cart_items
+    
+    context = {'items':items, 'order':order, 'cartItems':cartItems}
+    return render(request, 'ecommerce/cart.html', context)
 
         
 def signup(request):
