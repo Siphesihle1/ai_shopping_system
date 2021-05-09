@@ -43,7 +43,6 @@ class Product(models.Model):
         return url
 
 
-
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     transaction_id = models.CharField(max_length=200, null=True)
@@ -62,7 +61,7 @@ class Order(models.Model):
             if i.product.digital == False:
                 shipping=True
         return shipping
-        
+    
     @property
     def clear(self):
         self.cart.clear()
@@ -79,7 +78,6 @@ class Order(models.Model):
         orderitems=self.orderitem_set.all()
         total = sum([item.quantity for item in orderitems])
         return total
-
 
 
 class OrderItem(models.Model):
