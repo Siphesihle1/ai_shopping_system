@@ -23,7 +23,7 @@ source venv/bin/activate
 Windows:
 ```
 virtualenv venv
-.\venv\bin\activate
+.\venv\Scripts\activate
 ```
 
 3. Add the the following lines to <code>./.git/info/exclude</code> or <code>.\\.git\info\exclude</code> <br>
