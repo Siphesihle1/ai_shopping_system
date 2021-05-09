@@ -62,9 +62,10 @@ class Order(models.Model):
             if i.product.digital == False:
                 shipping=True
         return shipping
-
-
-
+    @property
+    def clear(self):
+        self.cart.clear()
+        self.session.modified = True
 
     @property
     def get_cart_total(self):
@@ -91,7 +92,6 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
-
 
 
 class ShippingAddress(models.Model):

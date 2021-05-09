@@ -175,7 +175,15 @@ def deletefromcart(request, id):
     context = {'items':items, 'order':order, 'cartItems':cartItems}
     return render(request, 'ecommerce/cart.html', context)
 
-        
+@login_required
+def emptyCart(request):
+    cart_id = request.session.get("cart_id", None)
+    if cart_id:
+        cart = Order.objects.get(id=cart_id)
+        cart.clear()
+        cart.save()
+    return render(request, 'ecommerce/cart.html')
+
 def signup(request):
 
     if request.method == 'POST':
