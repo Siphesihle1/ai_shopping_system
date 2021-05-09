@@ -177,12 +177,12 @@ def deletefromcart(request, id):
 
 @login_required
 def emptyCart(request):
-    cart_id = request.session.get("cart_id", None)
-    if cart_id:
-        cart = Order.objects.get(id=cart_id)
-        cart.clear()
-        cart.save()
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order.delete()
     return render(request, 'ecommerce/cart.html')
+
 
 def signup(request):
 
