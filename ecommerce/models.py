@@ -62,6 +62,7 @@ class Order(models.Model):
             if i.product.digital == False:
                 shipping=True
         return shipping
+        
     @property
     def clear(self):
         self.cart.clear()
@@ -106,3 +107,23 @@ class ShippingAddress(models.Model):
 
     def __str__(self):
         return self.address
+
+class CustomerActivity(models.Model):
+    ADD = "A"
+    VIEW = "V"
+    ACTIONS = [(ADD, "add"), (VIEW, "view"),]
+
+    customer = models.ForeginKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    product = models.ForegignKey(Product, o)
+    
+    action = models.CharField(
+        max_length=1,
+        choices=ACTIONS,
+        default=ADD,
+    )
+
+    count = models.PositiveIntegerField()
+
+    def __str__(self):
+        return self.product.name
+
