@@ -61,11 +61,6 @@ class Order(models.Model):
             if i.product.digital == False:
                 shipping=True
         return shipping
-    
-    @property
-    def clear(self):
-        self.cart.clear()
-        self.session.modified = True
 
     @property
     def get_cart_total(self):
@@ -111,8 +106,8 @@ class CustomerActivity(models.Model):
     VIEW = "V"
     ACTIONS = [(ADD, "add"), (VIEW, "view"),]
 
-    customer = models.ForeginKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    product = models.ForegignKey(Product, o)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
     
     action = models.CharField(
         max_length=1,
@@ -120,7 +115,8 @@ class CustomerActivity(models.Model):
         default=ADD,
     )
 
-    count = models.PositiveIntegerField()
+    count = models.IntegerField(default=0, null=True, blank=True)
+    event_date=models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.product.name

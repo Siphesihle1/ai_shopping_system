@@ -177,12 +177,77 @@ def deletefromcart(request, id):
 
 @login_required
 def emptyCart(request):
+
+    # Get customer information
     u = request.user
     customer = Customer.objects.get(user_id=u.id)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    order.delete()
-    return render(request, 'ecommerce/cart.html')
 
+    # Get order information
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+
+    # Delete order
+    order.delete()
+
+    # Get the new order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    items = order.orderitem_set.all()   
+    cartItems = order.get_cart_items
+    
+    context = {'items':items, 'order':order, 'cartItems':cartItems}
+    return render(request, 'ecommerce/cart.html', context)
+
+@login_required
+def storeCustomerActivity(request):
+
+    # Get customer information
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+    
+    # Get activity data
+    data = json.loads(request.body)
+    
+    product_id = data["product_id"]
+    action = data["action"]
+
+    product = Product.objects.get(id=product_id)
+    
+    # Store the information
+    if (action == 'add'):
+        customerActivity, created = CustomerActivity.objects.get_or_create(
+            customer=customer, 
+            product=product, 
+            action=CustomerActivity.ADD
+        )
+    else:
+        customerActivity, created = CustomerActivity.objects.get_or_create(
+            customer=customer, 
+            product=product, 
+            action=CustomerActivity.VIEW
+        )
+
+    # Increment event count
+    customerActivity.count = (customerActivity.count + 1)
+    customerActivity.save()
+    
+    return JsonResponse({"message": "{} {}ed the {}".format(customer, action, product)}, safe=False)
+
+@login_required
+def customer_activity(request):
+
+    # Get customer info
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+
+    # Get activity logs for customer
+    logs = CustomerActivity.objects.filter(customer=customer).all()
+
+    # Get the order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+    cartItems = order.get_cart_items
+
+    context = {"activity_logs": logs, "cartItems": cartItems}
+
+    return render(request, 'ecommerce/useractivity.html', context)
 
 def signup(request):
 

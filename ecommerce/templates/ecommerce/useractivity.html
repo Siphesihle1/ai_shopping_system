@@ -1,0 +1,31 @@
+{% extends 'ecommerce/main.html' %}
+{% load static %}
+
+{% block title %}Past activity{% endblock title%}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'ecommerce/feed.css' %}">
+{% endblock style%}
+
+{% block content %}
+<h2>Activity Feed</h2>
+
+{% if activity_logs %}
+<div class="activity-feed">
+{% for log in activity_logs%}
+    
+    <div class="feed-item">
+        <div class="date">{{ log.event_date | date:"SHORT_DATE_FORMAT"}}</div>
+        {% if log.action == "A" %}
+        <div class="text">You added {{ log.count }} {{ log.product }} product{% if log.count > 1%}s{% endif %} to cart.</div>
+        {% else %}
+        <div class="text">You viewed the {{ log.product }} {{ log.count }} time{% if log.count > 1%}s{% endif %}.</div>
+        {% endif %}
+    </div>
+{% endfor %}
+</div>
+{% else %}
+<p id="log-message">Nothing to see here</p>
+{% endif %}
+
+{% endblock content %}
