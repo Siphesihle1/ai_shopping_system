@@ -14,6 +14,7 @@ urlpatterns = [
  	re_path('emptyCart/', views.emptyCart, name="emptyCart"),
 	path('store_customer_activity/', views.storeCustomerActivity, name="store_customer_activity"),	
 	path('past_activity/', views.customer_activity, name="past_activity"),
+	path('orderhistory/', views.Order_History, name="orderhistory"),
 ]
 
 

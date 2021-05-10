@@ -88,7 +88,7 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-            'HOST' : 'localhost',
+            'HOST' : 'localhost' ,
             'PORT' : '5432',
             }    
 

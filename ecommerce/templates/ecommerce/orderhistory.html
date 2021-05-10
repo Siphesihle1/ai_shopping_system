@@ -1,0 +1,37 @@
+{% extends 'ecommerce/main.html' %}
+
+{%block title%}My Orders{%endblock%}
+
+{%block content%}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">    
+                <h3>Previous Orders</h3>
+                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Total Amount</th>
+                            <th>Date ordered</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%for ord in orders%}
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{ord.transaction_id}}</td>
+                            <td>{{ord.total}}</td>
+                            <td>{{ord.date_ordered}}</td>
+                            <td>{{ord.complete}}</td>
+                        {%endfor%}
+                    </tbody>
+                </table>        
+            </div>
+            <div class="col-md-8">
+            </div>
+            
+        </div>
+    </div>
+{%endblock%}                

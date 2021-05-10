@@ -27,6 +27,8 @@ from .models import *
 from cart.cart import Cart
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
+from django.views.generic import TemplateView
+
 
 # Create your views here.
 
@@ -306,3 +308,21 @@ def Logout(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect('store')
+
+@login_required
+def Order_History(request):
+
+    # Get customer info
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+
+    # Get activity logs for customer
+    logs = CustomerActivity.objects.filter(customer=customer).all()
+
+    # Get the order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+    cartItems = order.get_cart_items
+
+    context = {"activity_logs": logs, "cartItems": cartItems}
+
+    return render(request, 'ecommerce/orderhistory.html', context)      
