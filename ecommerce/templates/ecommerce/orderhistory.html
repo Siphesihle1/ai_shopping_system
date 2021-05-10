@@ -2,7 +2,7 @@
 
 {%block title%}My Orders{%endblock%}
 
-{%block content%}
+{% block content %}
     <div class="container">
         <div class="row">
             <div class="col-md-8">    
@@ -20,18 +20,17 @@
                     <tbody>
                         {%for ord in orders%}
                         <tr>
-                            <td>{{forloop.counter}}</td>
-                            <td>{{ord.transaction_id}}</td>
+                            <td>{{forloop.counter}}</td>                            
                             <td>{{ord.total}}</td>
                             <td>{{ord.date_ordered}}</td>
-                            <td>{{ord.complete}}</td>
+                            <td>Delivered</td>
+                        </tr>
                         {%endfor%}
                     </tbody>
                 </table>        
             </div>
             <div class="col-md-8">
-            </div>
-            
+            </div>  
         </div>
     </div>
-{%endblock%}                
+{% endblock content %}                
