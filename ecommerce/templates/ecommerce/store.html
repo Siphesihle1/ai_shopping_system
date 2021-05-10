@@ -6,81 +6,62 @@
 {% block content %}
 
 <div class="row">
+	
 	{% for product in products %}
 
-
 	<div class="modal fade bd-example-modal-lg" id="previewItemModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-			  <div class="modal-dialog modal-lg">
-			    <div class="modal-content">
-			      
-
-			      <div class="col-lg-4">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="col-lg-4">
 					<img class="thumbnail" src="{{product.imageURL}}">
 					<div class="box-element product">
-
-						<h6 class="h6name"><strong>
-							
-							
+						<h6 class="h6name"><strong>			
 						</strong></h6>
-
-
-
-						<hr>
-
-				<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-
-				
-				<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
-
+						<hr>						
+						<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>			
+						<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
+					</div>
+					<div class="row-md-9">
+						<h5 class="h5description"><strong></strong></h5>
+					</div>
+				</div>
 			</div>
+		</div>  
+	</div>
 
-			<div class="row-md-9">
 
-			<h5 class="h5description"><strong></strong></h5>
+	<div class="col-lg-4">
+		<img class="thumbnail" src="{{product.imageURL}}">
+		<div class="box-element product">
+			<h6><strong>{{product.name}}</strong></h6>
+			<hr>
+			{% if user.is_authenticated %}
+				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
+			{% endif %}
+			<button id="view-btn" 
+			data-product={{product.id}} 
+			data-productName="{{product.name}}"
+			data-productPrice={{product.price|floatformat:2}}
+			data-productImg = {{product.imageURL}}
+			data-productDesc = "{{product.description}}"
+			data-action="view" 
+			type="button" 
+			class="btn btn-primary view-btn" 
+			data-toggle="modal" 
+			data-target="#previewItemModal">View</button>
 
-			</div>
-
+			<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
 		</div>
+	</div>
 
-		
-			    </div>
-			  </div>
-			    
-		</div>
-
-
-		<div class="col-lg-4">
-			<img class="thumbnail" src="{{product.imageURL}}">
-			<div class="box-element product">
-				<h6><strong>{{product.name}}</strong></h6>
-				<hr>
-				{% if user.is_authenticated %}
-					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
-				{% endif %}
-				<button id="view-btn" 
-				data-product={{product.id}} 
-				data-productName="{{product.name}}"
-				data-productPrice={{product.price|floatformat:2}}
-				data-productImg = {{product.imageURL}}
-				data-productDesc = "{{product.description}}"
-				data-action="view" 
-				type="button" 
-				class="btn btn-primary view-btn" 
-				data-toggle="modal" 
-				data-target="#previewItemModal">View</button>
-
-				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
-
-			</div>
-		</div>
 	{% endfor %}
+
 </div>
 
+{% endblock content %}
 
-<script type="text/javascript">
-	
-
-			
+{% block javascript %}
+<script type="text/javascript">		
 	var updateBtns = document.getElementsByClassName('view-btn')
 
 	for (i=0; i < updateBtns.length; i++){
@@ -103,16 +84,7 @@
 
 		})
 	}
-
-
-	</script>
-
-
-
-
-{% endblock content %}
-
-{% block javascript %}
+</script>
 <script type="text/javascript" src="{% static 'ecommerce/js/cart.js' %}"></script>
 <script type="text/javascript" src="{% static 'ecommerce/js/track.js' %}"></script>
 {% endblock javascript %}
