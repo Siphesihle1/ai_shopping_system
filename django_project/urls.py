@@ -28,7 +28,6 @@ urlpatterns = [
     path('login/', ecommerce_view.Login, name='login'),
     path('logout/', ecommerce_view.Logout, name='logout'),
     path('signup/', ecommerce_view.signup, name='signup'),
-    path('api/', include('salesman.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
