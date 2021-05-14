@@ -11,10 +11,8 @@ urlpatterns = [
 	path('update_item/', views.updateItem, name="update_item"),
 	path('process_order/', views.processOrder, name="process_order"), 
 	path('deletefromcart/<int:id>/', views.deletefromcart, name="deletefromcart"),
- 	re_path('emptyCart/', views.emptyCart, name="emptyCart"),
-	path('store_customer_activity/', views.storeCustomerActivity, name="store_customer_activity"),	
-	path('past_activity/', views.customer_activity, name="past_activity"),
-	path('orderhistory/', views.order_history, name="orderhistory"),
+ re_path('emptyCart/', views.emptyCart, name="emptyCart"),
+
 ]
 
 

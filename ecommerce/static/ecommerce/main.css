@@ -32,20 +32,7 @@ h1,h2,h3,h4,h5,h6{
 #cart-icon{
 	width:25px;
 	display: inline-block;
-	color: white;
-}
-
-#user-menu {
-	margin-left: 20px;
-}
-
-#dropdownMenuLink:hover {
-	text-decoration: none;
-}
-
-.dropdown-item:hover, .dropdown-item:focus {
-	color: #000000;
-	background-color: #f7ba5b;
+	margin-left: 15px;
 }
 
 #cart-total{

@@ -20,8 +20,8 @@ if (shipping == 'False' && user != 'AnonymousUser'){
 
 var form = document.getElementById('form')
 form.addEventListener('submit', function(e){
-	e.preventDefault();
-	console.log('Form submitted...');
+	e.preventDefault()
+	console.log('Form submitted...')
 	document.getElementById('form-button').classList.add("hidden");
 	document.getElementById('payment-info').classList.remove("hidden");
 })
@@ -57,8 +57,8 @@ function submitFormData(){
 
 	if(user == 'AnonymousUser'){
 
-		userFormData.name = form.name.value;
-		userFormData.email = form.email.value;
+		userFormData.name = form.name.value
+		userFormData.email = form.email.value
 
 	}
 
@@ -72,13 +72,11 @@ function submitFormData(){
 		body:JSON.stringify({'form':userFormData, 'shipping':shippingInfo}),
 
 	})
-    .then((response) => { 
-		return response.json();
-	})
+    .then((response) => response.json())
     .then((data) => {
         console.log('Success:', data);
         alert('Transaction completed');
-        window.location.href = "/"
+        window.location.href = "{% url 'store' %}"
     })
 
 }
