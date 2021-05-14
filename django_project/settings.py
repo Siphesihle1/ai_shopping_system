@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-3f*v1r=bl#ufa_c-k7v*$3u@914v055^9!!@sk#93l=iiadpi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['148.100.76.106']
+
+ALLOWED_HOSTS = ['148.100.79.106','127.0.0.1']
+
 
 
 # Application definition
@@ -39,6 +41,17 @@ INSTALLED_APPS = [
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
+
+        #uservisit
+        'user_visit',
+
+        #salesman
+            'salesman.core',
+            'salesman.basket',
+            'salesman.checkout',
+            'salesman.orders',
+            'salesman.admin',
+            'rest_framework',
         ]
 
 MIDDLEWARE = [
@@ -50,6 +63,7 @@ MIDDLEWARE = [
         'django.contrib.auth.middleware.AuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'user_visit.middleware.UserVisitMiddleware',
         ]
 
 ROOT_URLCONF = 'django_project.urls'
@@ -88,7 +102,9 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-            'HOST' : 'localhost' ,
+
+            'HOST' : '148.100.79.106',
+
             'PORT' : '5432',
             }    
 
@@ -141,8 +157,6 @@ MEDIA_URL = '/ecommerce/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ecommerce')
 
-CART_SESSION_ID = ''
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -176,3 +190,11 @@ MESSAGE_TAGS = {
         messages.WARNING: 'alert-warning',
         messages.ERROR: 'alert-danger',        
 }
+
+SALESMAN_PRODUCT_TYPES = {
+    'ecommerce.Product': 'ecommerce.serializers.ProductSerializer',
+}
+SALESMAN_PAYMENT_METHODS = [
+    #
+    'ecommerce.payment.CreditCardPayment',
+]
