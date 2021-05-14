@@ -27,8 +27,6 @@ from .models import *
 from cart.cart import Cart
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
-from django.views.generic import TemplateView
-
 
 # Create your views here.
 
@@ -130,11 +128,10 @@ def processOrder(request):
         u = request.user
         customer = Customer.objects.get(user_id=u.id)
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = data['form']['total']
+        total = float(data['form']['total'])
         order.transaction_id = transaction_id
-        print(total, transaction_id)
 
-        """if total == order.get_cart_total:
+        if total == order.get_cart_total:
             order.complete = True
             order.save()
 
@@ -146,7 +143,7 @@ def processOrder(request):
                 city=data['shipping']['city'],
                 state=data['shipping']['state'],
                 zipcode=data['shipping']['zipcode'],
-            )"""
+            )
 
 
         return JsonResponse('Payment Complete', safe=False)
@@ -180,77 +177,12 @@ def deletefromcart(request, id):
 
 @login_required
 def emptyCart(request):
-
-    # Get customer information
     u = request.user
     customer = Customer.objects.get(user_id=u.id)
-
-    # Get order information
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
-    # Delete order
     order.delete()
+    return render(request, 'ecommerce/cart.html')
 
-    # Get the new order items
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    items = order.orderitem_set.all()   
-    cartItems = order.get_cart_items
-    
-    context = {'items':items, 'order':order, 'cartItems':cartItems}
-    return render(request, 'ecommerce/cart.html', context)
-
-@login_required
-def storeCustomerActivity(request):
-
-    # Get customer information
-    u = request.user
-    customer = Customer.objects.get(user_id=u.id)
-    
-    # Get activity data
-    data = json.loads(request.body)
-    
-    product_id = data["product_id"]
-    action = data["action"]
-
-    product = Product.objects.get(id=product_id)
-    
-    # Store the information
-    if (action == 'add'):
-        customerActivity, created = CustomerActivity.objects.get_or_create(
-            customer=customer, 
-            product=product, 
-            action=CustomerActivity.ADD
-        )
-    else:
-        customerActivity, created = CustomerActivity.objects.get_or_create(
-            customer=customer, 
-            product=product, 
-            action=CustomerActivity.VIEW
-        )
-
-    # Increment event count
-    customerActivity.count = (customerActivity.count + 1)
-    customerActivity.save()
-    
-    return JsonResponse({"message": "{} {}ed the {}".format(customer, action, product)}, safe=False)
-
-@login_required
-def customer_activity(request):
-
-    # Get customer info
-    u = request.user
-    customer = Customer.objects.get(user_id=u.id)
-
-    # Get activity logs for customer
-    logs = CustomerActivity.objects.filter(customer=customer).all()
-
-    # Get the order items
-    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
-    cartItems = order.get_cart_items
-
-    context = {"activity_logs": logs, "cartItems": cartItems}
-
-    return render(request, 'ecommerce/useractivity.html', context)
 
 def signup(request):
 
@@ -309,22 +241,3 @@ def Logout(request):
     if request.user.is_authenticated:
         logout(request)
         return redirect('store')
-
-@login_required
-def order_history(request):
-
-    # Get customer info
-    u = request.user
-    customer = Customer.objects.get(user_id=u.id)
-
-    # Get activity logs for customer
-    logs = CustomerActivity.objects.filter(customer=customer).all()
-
-    # Get the previous orders
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    cartItems = order.get_cart_items
-    orders = Order.objects.filter(customer=customer).all()
-
-    context = {"orders": orders, "cartItems": cartItems}
-
-    return render(request, 'ecommerce/orderhistory.html', context)      

@@ -26,9 +26,7 @@ SECRET_KEY = 'django-insecure-3f*v1r=bl#ufa_c-k7v*$3u@914v055^9!!@sk#93l=iiadpi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-
-ALLOWED_HOSTS = ['148.100.79.106','127.0.0.1']
-
+ALLOWED_HOSTS = ['148.100.79.67','127.0.0.1']
 
 
 # Application definition
@@ -87,7 +85,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
-# Database https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 """DATABASES = {
     'default': {
@@ -102,9 +101,7 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-
-            'HOST' : '148.100.79.106',
-
+            'HOST' : '148.100.79.67',
             'PORT' : '5432',
             }    
 
