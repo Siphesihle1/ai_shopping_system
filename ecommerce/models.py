@@ -109,7 +109,10 @@ class CustomerActivity(models.Model):
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
-    
+
+    class Meta:
+        verbose_name_plural = 'Customer activities'
+
     action = models.CharField(
         max_length=1,
         choices=ACTIONS,
