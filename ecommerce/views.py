@@ -216,13 +216,13 @@ def storeCustomerActivity(request):
     
     # Store the information
     if (action == 'add'):
-        customerActivity, created = CustomerActivity.objects.get_or_create(
+        customerActivity = CustomerActivity.objects.create(
             customer=customer, 
             product=product, 
             action=CustomerActivity.ADD
         )
     else:
-        customerActivity, created = CustomerActivity.objects.get_or_create(
+        customerActivity = CustomerActivity.objects.create(
             customer=customer, 
             product=product, 
             action=CustomerActivity.VIEW
