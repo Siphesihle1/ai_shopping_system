@@ -57,6 +57,3 @@ class TestOrderModel(TestCase):
         data = self.data1
         self.assertTrue(isinstance(data,Order))
         self.assertEqual(str(data), 'django')
-        
-#class TestOrderItem(TestCase):
-#class TestShippingAddress(TestCase):
