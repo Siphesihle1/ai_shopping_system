@@ -240,7 +240,7 @@ def customer_activity(request):
     customer = Customer.objects.get(user_id=u.id)
 
     # Get activity logs for customer
-    logs = CustomerActivity.objects.filter(customer=customer).all()
+    logs = CustomerActivity.objects.filter(customer=customer, action = CustomerActivity.VIEW).order_by('-event_date')[:20]
 
     # Get the order items
     order, created = Order.objects.get_or_create(customer=customer, complete=False) 
