@@ -39,7 +39,7 @@ class TestProductsModel(TestCase):
         self.assertEqual(data.count(), 2)
         
         
-class TestOrderMode(TestCase):
+class TestOrderModel(TestCase):
 
     def setUp(self):
         customer = Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
@@ -58,5 +58,5 @@ class TestOrderMode(TestCase):
         self.assertTrue(isinstance(data,Order))
         self.assertEqual(str(data), 'django')
         
-class TestOrderItem(TestCase):
-class TestShippingAddress(TestCase):
+#class TestOrderItem(TestCase):
+#class TestShippingAddress(TestCase):
