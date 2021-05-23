@@ -228,8 +228,6 @@ def storeCustomerActivity(request):
             action=CustomerActivity.VIEW
         )
 
-    # Increment event count
-    customerActivity.count = (customerActivity.count + 1)
     customerActivity.save()
     
     return JsonResponse({"message": "{} {}ed the {}".format(customer, action, product)}, safe=False)

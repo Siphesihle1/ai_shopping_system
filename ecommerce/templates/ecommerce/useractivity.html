@@ -15,11 +15,11 @@
 {% for log in activity_logs%}
     
     <div class="feed-item">
-        <div class="date">{{ log.event_date | date:"SHORT_DATE_FORMAT"}}</div>
+        <div class="date">{{ log.event_date | date:"D d M Y H:i"}}</div>
         {% if log.action == "A" %}
-        <div class="text">You added {{ log.count }} {{ log.product }} product{% if log.count > 1%}s{% endif %} to cart.</div>
+        <div class="text">You added the {{ log.product }} to cart.</div>
         {% else %}
-        <div class="text">You viewed the {{ log.product }} {{ log.count }} time{% if log.count > 1%}s{% endif %}.</div>
+        <div class="text">You viewed the {{ log.product }}.</div>
         {% endif %}
     </div>
 {% endfor %}
