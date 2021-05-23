@@ -123,4 +123,17 @@ class CustomerActivity(models.Model):
 
     def __str__(self):
         return self.product.name
+    
+class PurchaseHistory(models.Model):
+    username = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    date_added = models.ForeignKey(OrderItem, on_delete=models.SET_NULL, null=True)
+    state=models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, null=True)
+
+    @property
+    def get_total(self):
+        total = self.product.price * self.orderitem.quantity
+        return total
+    
+ 
 
