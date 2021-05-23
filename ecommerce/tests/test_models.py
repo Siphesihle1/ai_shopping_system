@@ -1,6 +1,6 @@
 
 from django.test import TestCase
-from store.models import Customer, Product, Order, OrderItem, ShippingAddress
+from ecommerce.models import Customer, Product, Order, OrderItem, ShippingAddress
 
 class TestCustomersModel(TestCase):
 
