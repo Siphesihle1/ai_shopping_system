@@ -10,8 +10,8 @@ class TestCustomerModel(TestCase):
         password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
         self.c = Client()
-        self.c.login(username=user.username, password=password)
-        self.customer = Customer.objects.create(user=user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
+        self.c.login(username=self.user.username, password=password)
+        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
 
     def test_customer_model_entry(self):
         """
@@ -27,8 +27,8 @@ class TestProductModel(TestCase):
         password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
         self.c = Client()
-        self.c.login(username=user.username, password=password)
-        self.customer = Customer.objects.create(user=user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
+        self.c.login(username=self.user.username, password=password)
+        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
 
         self.product1 = Product.objects.create(price='20.00', 
             name='product1', digital=True, image='image_path1', 
@@ -59,11 +59,11 @@ class TestProductModel(TestCase):
 class TestOrderModel(TestCase):
 
     def setUp(self):
-        password = 'django12345'
+       password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
         self.c = Client()
-        self.c.login(username=user.username, password=password)
-        self.customer = Customer.objects.create(user=user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
+        self.c.login(username=self.user.username, password=password)
+        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414', latitude='django10.10', longitude='django11.11')
 
         self.order1 = Order.objects.create(customer, transaction_id='00001A', complete=True)
         self.order2 = Order.orders.create(customer, transaction_id='00001B', complete=False)
