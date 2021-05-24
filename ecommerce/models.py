@@ -49,6 +49,9 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete=models.BooleanField(default=False, null=True, blank=False)
+    class Meta:
+        db_table = "ecommerce_order"
+
 
     def __str__(self):
         return str(self.id)
