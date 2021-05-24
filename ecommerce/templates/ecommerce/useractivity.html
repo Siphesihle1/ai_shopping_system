@@ -8,7 +8,7 @@
 {% endblock style%}
 
 {% block content %}
-<h2>Activity Feed</h2>
+<h2>Recently viewed items</h2> <!--The heading was initially 'Activity feed'-->
 
 {% if activity_logs %}
 <div class="activity-feed">
@@ -19,7 +19,7 @@
         {% if log.action == "A" %}
         <div class="text">You added the {{ log.product }} to cart.</div>
         {% else %}
-        <div class="text">You viewed the {{ log.product }}.</div>
+        <div class="text">{{ log.product }}</div> <!--You viewed the {{ log.product }}.-->
         {% endif %}
     </div>
 {% endfor %}

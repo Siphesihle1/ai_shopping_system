@@ -240,7 +240,7 @@ def customer_activity(request):
     customer = Customer.objects.get(user_id=u.id)
 
     # Get activity logs for customer
-    logs = CustomerActivity.objects.filter(customer=customer, action = CustomerActivity.VIEW).order_by('-event_date')[:20]
+    logs = CustomerActivity.objects.filter(customer=customer, action = CustomerActivity.VIEW).order_by('-event_date')[:20] 
 
     # Get the order items
     order, created = Order.objects.get_or_create(customer=customer, complete=False) 
@@ -325,4 +325,27 @@ def order_history(request):
 
     context = {"orders": orders, "cartItems": cartItems}
 
-    return render(request, 'ecommerce/orderhistory.html', context)      
+    return render(request, 'ecommerce/orderhistory.html', context)   
+
+@csrf_exempt
+def PurchaseHistory(request):
+    
+    if request.user.is_authenticated:
+
+        transaction_id = datetime.datetime.now().timestamp()
+        data = json.loads(request.body)
+
+        u = request.user
+        customer = Customer.objects.get(user_id=u.id)
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        total = order.get_cart_total
+
+        if order.complete == True:
+            p = PurchaseHistory(username = customer, order = customer, date_added = order.transaction_id, state = 'Delivered')
+            p.save()
+
+        return JsonResponse('Stored', safe=False)
+    else:
+        return redirect('store')
+
+
