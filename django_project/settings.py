@@ -26,11 +26,7 @@ SECRET_KEY = 'django-insecure-3f*v1r=bl#ufa_c-k7v*$3u@914v055^9!!@sk#93l=iiadpi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-<<<<<<< HEAD
-ALLOWED_HOSTS = ['127.0.0.1']
-=======
-ALLOWED_HOSTS = ['localhost']
->>>>>>> 4e8380a997b9be889a28e92d6c5460fbf9be6868
+ALLOWED_HOSTS = ['148.100.76.106']
 
 
 # Application definition
@@ -92,11 +88,7 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-<<<<<<< HEAD
-            'HOST' : '148.100.76.106' ,
-=======
-            'HOST' : '148.100.76.106',
->>>>>>> 4e8380a997b9be889a28e92d6c5460fbf9be6868
+            'HOST' : 'localhost' ,
             'PORT' : '5432',
             'TEST' : {
                 'NAME': 'test_db',
