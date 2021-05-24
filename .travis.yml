@@ -11,8 +11,9 @@ install:
 
  # command to run tests
 script:
-  #- python manage.py makemigrations
-  #- python manage.py migrate --fake default
+  - python manage.py makemigrations
+  - python manage.py migrate --fake default
+  - python manage.py migrate ecommerce
   - coverage run manage.py test
 
 after_success:
