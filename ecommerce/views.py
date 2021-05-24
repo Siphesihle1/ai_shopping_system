@@ -310,20 +310,10 @@ def Logout(request):
 
 @login_required
 def order_history(request):
-
-    # Get customer info
     u = request.user
     customer = Customer.objects.get(user_id=u.id)
-
-    # Get activity logs for customer
-    logs = CustomerActivity.objects.filter(customer=customer).all()
-
-    # Get the previous orders
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    cartItems = order.get_cart_items
-    orders = Order.objects.filter(customer=customer).all()
-
-    context = {"orders": orders, "cartItems": cartItems}
+    order_s = Order.objects.filter(customer=customer)
+    context = { 'order_s': order_s}
 
     return render(request, 'ecommerce/orderhistory.html', context)   
 
