@@ -17,8 +17,10 @@
 					<div class="box-element product">
 						<h6 class="h6name"><strong>			
 						</strong></h6>
-						<hr>						
+						<hr>		
+						{% if user.is_authenticated %}		
 						<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>			
+						{% endif %}
 						<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
 					</div>
 					<div class="row-md-9">
@@ -39,14 +41,14 @@
 				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
 			{% endif %}
 			<button id="view-btn" 
-			data-product={{product.id}} 
+			data-product="{{product.id}}" 
 			data-productName="{{product.name}}"
-			data-productPrice={{product.price|floatformat:2}}
-			data-productImg = {{product.imageURL}}
-			data-productDesc = "{{product.description}}"
+			data-productPrice="{{product.price|floatformat:2}}"
+			data-productImg="{{product.imageURL}}"
+			data-productDesc="{{product.description}}"
 			data-action="view" 
 			type="button" 
-			class="btn btn-primary view-btn" 
+			class="btn btn-primary view-product-btn" 
 			data-toggle="modal" 
 			data-target="#previewItemModal">View</button>
 
@@ -62,7 +64,7 @@
 
 {% block javascript %}
 <script type="text/javascript">		
-	var updateBtns = document.getElementsByClassName('view-btn')
+	var updateBtns = document.getElementsByClassName('view-product-btn')
 
 	for (i=0; i < updateBtns.length; i++){
 		updateBtns[i].addEventListener('click', function(){
