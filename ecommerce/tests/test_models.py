@@ -43,7 +43,7 @@ class TestProductModel(TestCase):
             name='product1', digital=True, image='image_path1', 
             description='TBD')
 
-        self.product2 = Product.products.create(price='10.00',
+        self.product2 = Product.objects.create(price='10.00',
             name='product2',digital=False, image='image_path2',
             description='TBD')
         
@@ -79,7 +79,7 @@ class TestOrderModel(TestCase):
         self.c.login(username=self.user.username, password=password)
 
         self.order1 = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
-        self.order2 = Order.objects.create(customer=self.usercustomer, transaction_id='00001B', complete=False)
+        self.order2 = Order.objects.create(customer=self.user.customer, transaction_id='00001B', complete=False)
         
     def test_get_cart_items(self):
         self.assertEqual(orderitems.get_cart_items, 0)
