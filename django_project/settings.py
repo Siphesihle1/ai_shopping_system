@@ -91,7 +91,7 @@ DATABASES = {
             'HOST' : '148.100.76.106',
             'PORT' : '5432',
             'TEST' : {
-                'NAME': 'test_db1',
+                'NAME': 'test_db',
             },
         }    
 
