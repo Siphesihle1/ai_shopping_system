@@ -11,7 +11,9 @@ install:
 
  # command to run tests
 script:
-  - coverage run manage.py test
+  - python manage.py makemigrations
+  - python manage.py migrate ecommerce
+  - coverage run manage.py test --noinput
 
 after_success:
   - coveralls

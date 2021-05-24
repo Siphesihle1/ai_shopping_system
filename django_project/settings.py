@@ -88,11 +88,14 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-            'HOST' : '148.100.76.106' ,
+            'HOST' : '148.100.76.106',
             'PORT' : '5432',
-            }    
+            'TEST' : {
+                'NAME': 'test_db',
+            },
+        }    
 
-        }
+    }
 
 
 # Password validation
