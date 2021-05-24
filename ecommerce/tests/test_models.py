@@ -78,8 +78,8 @@ class TestOrderModel(TestCase):
         self.c = Client()
         self.c.login(username=self.user.username, password=password)
 
-        self.order1 = Order.objects.create(self.user.customer, transaction_id='00001A', complete=True)
-        self.order2 = Order.orders.create(self.usercustomer, transaction_id='00001B', complete=False)
+        self.order1 = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
+        self.order2 = Order.orders.create(customer=self.usercustomer, transaction_id='00001B', complete=False)
         
     def test_get_cart_items(self):
         self.assertEqual(orderitems.get_cart_items, 0)
