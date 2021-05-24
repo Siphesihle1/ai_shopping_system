@@ -20,8 +20,8 @@ class TestProductsModel(TestCase):
     def setUp(self):
     
         Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
-        self.data1 = Product.objects.create(price='20.00', name='django', digital=True, image='django')
-        self.data2 = Product.products.create(price='10.00',name='django1',digital=False, image='django1')
+        self.data1 = Product.objects.create(price='20.00', name='django', digital=True, image='django', description='a django product')
+        self.data2 = Product.products.create(price='10.00',name='django1',digital=False, image='django1', description='a django1 project')
         
     def test_products_model_entry(self):
         """
@@ -39,16 +39,21 @@ class TestProductsModel(TestCase):
         self.assertEqual(data.count(), 2)
         
         
-class TestOrderMode(TestCase):
+class TestOrderModel(TestCase):
 
     def setUp(self):
         customer = Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
         self.data1 = Order.objects.create(customer, transaction_id='00001A', date_ordered='2020-01-01', complete=True)
         self.data2 = Order.orders.create(customer, transaction_id='00001B', date_ordered='2020-02-01', complete=False)
+    #def test_shipping(self):
+        
+       # data = self.data1
+       # self.assertEqual(data.digital, 2)
         
     def test_get_cart_total(self):
         
         orderitems=self.orderitem_set.all()
+        self.assertEqual(orderitems.count(), 2)
         
     def test_order_model_entry(self):
         """
@@ -59,4 +64,14 @@ class TestOrderMode(TestCase):
         self.assertEqual(str(data), 'django')
         
 class TestOrderItem(TestCase):
-class TestShippingAddress(TestCase):
+    def setUp(self):
+        self.prod1 = Product.products.create(price='10.00',name='django1',digital=False, image='django1', description='a django1 project')
+        self.data1 = Order.objects.create(customer, transaction_id='00001A', date_ordered='2020-01-01', complete=True)
+        self.data2 = Order.orders.create(customer, transaction_id='00001B', date_ordered='2020-02-01', complete=False)
+        self.orderitem1 = OrderItem.objects.create(prod1,data1,quantity='1',date_added='2021-02-02')
+        
+    def test_get_total(self):
+        orderitems = self.orderitem1
+        self.assertEqual(orderitems.get_total(), orderitems.product.price*orderitems.quantity)
+    
+
