@@ -59,7 +59,7 @@ class TestProductModel(TestCase):
 class TestOrderModel(TestCase):
 
     def setUp(self):
-       password = 'django12345'
+        password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
         self.c = Client()
         self.c.login(username=self.user.username, password=password)
