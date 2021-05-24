@@ -61,7 +61,7 @@ class TestProductModel(TestCase):
         """
         Test product model custom manager returns only active products
         """
-        products = Product.products.all()
+        products = Product.objects.all()
         self.assertEqual(products.count(), 2)
         
         
@@ -86,8 +86,8 @@ class TestOrderModel(TestCase):
         self.assertEqual(self.order2.get_cart_items, 0)
 
     def test_get_cart_total(self):
-        self.assertEqual(self.oder1.get_cart_total, 0.0)
-        self.assertEqual(self.oder2.get_cart_total, 0.0)
+        self.assertEqual(self.order1.get_cart_total, 0.0)
+        self.assertEqual(self.order2.get_cart_total, 0.0)
 
     def test_order_model_entry(self):
         """
