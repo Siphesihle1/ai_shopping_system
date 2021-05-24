@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 from django.contrib.auth.models import User
-from ecommerce.models import Customer, Product, Order, OrderItem, ShippingAddress
+from ecommerce.models import Customer, Product, Order, OrderItem, ShippingAddress, CustomerActivity, PurchaseHistory
 from django.test.client import Client
 
 class TestCustomerModel(TestCase):
@@ -96,7 +96,7 @@ class TestOrderModel(TestCase):
         self.assertEqual(self.order2.shipping, False)
 
     def test_id(self):
-        self.assertEqual(str(self.order1.id), str(self.oder1))
+        self.assertEqual(str(self.order1.id), str(self.order1))
         self.assertEqual(str(self.order2.id), str(self.order2))
     
     def test_order_model_entry(self):
@@ -192,7 +192,7 @@ class TestCustomerActivityModel(TestCase):
         
         
     def test_product_name(self):
-        self.assertEqual(str(self.shipping_adddress), '')
+        self.assertEqual(str(self.customer_activity), 'product')
     
 
     def test_customer_activity_entry(self):
@@ -219,7 +219,7 @@ class TestPurchaseHistoryModel(TestCase):
         
         # Purchase history
         self.purchase_history = PurchaseHistory.objects.create(username=self.user.customer,
-            order=self.oder, state=self.shipping_adddress)
+            order=self.order, state=self.shipping_adddress)
 
     def test_purchase_history_entry(self):
         self.assertTrue(isinstance(self.purchase_history, PurchaseHistory))
