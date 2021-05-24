@@ -52,10 +52,10 @@ class TestProductModel(TestCase):
         Test product model data insertion/types/field attributes
         """
         
-        self.assertTrue(isinstance(product1, Product))
-        self.assertTrue(isinstance(product2, Product))
-        self.assertEqual(str(product1), 'product1')
-        self.assertEqual(str(product2), 'product2')
+        self.assertTrue(isinstance(self.product1, Product))
+        self.assertTrue(isinstance(self.product2, Product))
+        self.assertEqual(str(self.product1), 'product1')
+        self.assertEqual(str(self.product2), 'product2')
         
     def test_products_custom_manager_basic(self):
         """
@@ -82,10 +82,12 @@ class TestOrderModel(TestCase):
         self.order2 = Order.objects.create(customer=self.user.customer, transaction_id='00001B', complete=False)
         
     def test_get_cart_items(self):
-        self.assertEqual(orderitems.get_cart_items, 0)
+        self.assertEqual(self.order1.get_cart_items, 0)
+        self.assertEqual(self.order2.get_cart_items, 0)
 
     def test_get_cart_total(self):
-        self.assertEqual(orderitems.get_cart_total, 0.0)
+        self.assertEqual(self.oder1.get_cart_total, 0.0)
+        self.assertEqual(self.oder2.get_cart_total, 0.0)
 
     def test_order_model_entry(self):
         """
