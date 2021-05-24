@@ -134,7 +134,7 @@ def processOrder(request):
         order.transaction_id = transaction_id
         print(total, transaction_id)
 
-        """if total == order.get_cart_total:
+        if total == order.get_cart_total:
             order.complete = True
             order.save()
 
@@ -146,7 +146,7 @@ def processOrder(request):
                 city=data['shipping']['city'],
                 state=data['shipping']['state'],
                 zipcode=data['shipping']['zipcode'],
-            )"""
+            )
 
 
         return JsonResponse('Payment Complete', safe=False)
