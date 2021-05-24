@@ -7,12 +7,17 @@ from django.test.client import Client
 class TestCustomerModel(TestCase):
 
     def setUp(self):
+        
+        # Sign up
         password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
         self.c = Client()
         self.c.login(username=self.user.username, password=password)
-        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414')
-
+        
     def test_customer_model_entry(self):
         """
         Test Customer model data insertion/types/field attributes
@@ -24,11 +29,15 @@ class TestCustomerModel(TestCase):
 class TestProductModel(TestCase):
 
     def setUp(self):
+        # Sign up
         password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
         self.c = Client()
         self.c.login(username=self.user.username, password=password)
-        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414')
 
         self.product1 = Product.objects.create(price='20.00', 
             name='product1', digital=True, image='image_path1', 
@@ -59,23 +68,29 @@ class TestProductModel(TestCase):
 class TestOrderModel(TestCase):
 
     def setUp(self):
+        # Sign up
         password = 'django12345'
         self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
         self.c = Client()
         self.c.login(username=self.user.username, password=password)
-        self.customer = Customer.objects.create(user=self.user,cellphone_no='0793942414')
 
         self.order1 = Order.objects.create(customer, transaction_id='00001A', complete=True)
         self.order2 = Order.orders.create(customer, transaction_id='00001B', complete=False)
         
+    def test_get_cart_items(self):
+        self.assertEqual(orderitems.get_cart_items, 0)
+
     def test_get_cart_total(self):
-        orderitems=self.orderitem_set.all()
-        self.assertEqual(orderitems.count(), 0)
-        
+        self.assertEqual(orderitems.get_cart_total, 0.0)
+
     def test_order_model_entry(self):
         """
         Test order model data insertion/types/field attributes
         """
-        self.assertTrue(isinstance(self.order1,Order))
-        self.assertTrue(isinstance(self.order2,Order))
+        self.assertTrue(isinstance(self.order1, Order))
+        self.assertTrue(isinstance(self.order2, Order))
         
