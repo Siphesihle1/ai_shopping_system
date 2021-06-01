@@ -88,11 +88,7 @@ DATABASES = {
             'NAME' : 'ai_shopping_system',
             'USER' : 'dbadmin',
             'PASSWORD' : 'admin12345',
-<<<<<<< HEAD
-            'HOST': 'localhost' ,
-=======
             'HOST' : 'localhost' ,
->>>>>>> 086049796ac686519d8c565bb2eb429e88a20d56
             'PORT' : '5432',
             'TEST' : {
                 'NAME': 'test_db',
