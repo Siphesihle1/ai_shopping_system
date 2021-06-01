@@ -11,7 +11,10 @@ install:
 
  # command to run tests
 script:
-  - coverage run manage.py test
+  - python manage.py makemigrations
+  - python manage.py migrate --fake
+  - python manage.py migrate
+  - coverage run manage.py test --noinput
 
 after_success:
   - coveralls
