@@ -15,6 +15,7 @@ urlpatterns = [
 	path('store_customer_activity/', views.storeCustomerActivity, name="store_customer_activity"),	
 	path('past_activity/', views.customer_activity, name="past_activity"),
 	path('orderhistory/', views.order_history, name="orderhistory"),
+	path('wished_items/', views.wished_items, name="wished_items"),
 ]
 
 

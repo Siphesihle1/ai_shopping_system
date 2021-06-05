@@ -108,7 +108,8 @@ class ShippingAddress(models.Model):
 class CustomerActivity(models.Model):
     ADD = "A"
     VIEW = "V"
-    ACTIONS = [(ADD, "add"), (VIEW, "view"),]
+    WISH = "W"
+    ACTIONS = [(ADD, "add"), (VIEW, "view"), (WISH, "wish"),]
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)

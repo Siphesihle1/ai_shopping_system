@@ -39,10 +39,11 @@
 			<hr>
 			{% if user.is_authenticated %}
 				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
+				<button data-product="{{product.id}}" data-action="wish" class="btn btn-outline-secondary add-to-wishlist-btn">♡</button>
 			{% endif %}
 			<button id="view-btn" 
 			data-product="{{product.id}}" 
-			data-productName="{{product.name}}"
+			data-productName="{{product.name}}
 			data-productPrice="{{product.price|floatformat:2}}"
 			data-productImg="{{product.imageURL}}"
 			data-productDesc="{{product.description}}"
@@ -56,7 +57,7 @@
 		</div>
 	</div>
 
-	{% endfor %}
+	{% endfor %} 
 
 </div>
 
