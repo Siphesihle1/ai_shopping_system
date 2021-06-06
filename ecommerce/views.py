@@ -221,13 +221,18 @@ def storeCustomerActivity(request):
             product=product, 
             action=CustomerActivity.ADD
         )
-    else:
+    elif(action == 'view'):
         customerActivity = CustomerActivity.objects.create(
             customer=customer, 
             product=product, 
             action=CustomerActivity.VIEW
         )
-
+    else:
+        customerActivity = CustomerActivity.objects.create(
+            customer=customer, 
+            product=product, 
+            action=CustomerActivity.WISH
+        )
     customerActivity.save()
     
     return JsonResponse({"message": "{} {}ed the {}".format(customer, action, product)}, safe=False)
@@ -249,6 +254,25 @@ def customer_activity(request):
     context = {"activity_logs": logs, "cartItems": cartItems}
 
     return render(request, 'ecommerce/pastactivity.html', context)
+
+@login_required
+def wished_items(request):
+
+    # Get customer info
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+
+    # Get activity logs for customer
+    logs = CustomerActivity.objects.filter(customer=customer, action = CustomerActivity.WISH).all()
+
+    # Get the order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+    cartItems = order.get_cart_items
+
+    context = {"activity_logs": logs, "cartItems": cartItems}
+
+    return render(request, 'ecommerce/wishlist.html', context)
+
 
 def signup(request):
 
