@@ -248,7 +248,7 @@ def customer_activity(request):
 
     context = {"activity_logs": logs, "cartItems": cartItems}
 
-    return render(request, 'ecommerce/useractivity.html', context)
+    return render(request, 'ecommerce/pastactivity.html', context)
 
 def signup(request):
 
