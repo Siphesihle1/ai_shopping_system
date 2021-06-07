@@ -28,7 +28,7 @@ from cart.cart import Cart
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.views.generic import TemplateView
-
+from ecommerce.models import CategoryBase, Product
 
 # Create your views here.
 
@@ -52,7 +52,9 @@ def store(request):
         cartItems = 0
 
     products = Product.objects.all()
-    context = {'products':products, 'cartItems':cartItems}
+    categorybase = CategoryBase.objects.all()
+    context = {'products':products,'categorybase':categorybase, 'cartItems':cartItems}
+
 
     return render(request, 'ecommerce/store.html', context)
 
