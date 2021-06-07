@@ -37,9 +37,7 @@ h1,h2,h3,h4,h5,h6{
 	border-radius: 0 0 4px 4px;
 }
 
-.bg-dark{
-	background-color: #4f868c!important;
-}
+
 
 #cart-icon{
 	width:25px;
@@ -125,4 +123,107 @@ h1,h2,h3,h4,h5,h6{
 
 .hidden{
 	display: none !important;
+}
+
+<<<<<<< HEAD
+/*Carousel styles*/
+
+.carousel {
+	margin: 50px auto;
+	padding: 0 70px;
+}
+.carousel .item {
+	min-height: 330px;
+    text-align: center;
+	overflow: hidden;
+}
+
+.carousel .thumb-wrapper {
+	text-align: center;
+}
+
+.carousel .thumb-content {
+	padding: 15px;
+}
+
+.carousel .carousel-control {
+	height: 100px;
+    width: 40px;
+    background: none;
+    margin: auto 0;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.carousel .carousel-control i {
+    font-size: 30px;
+    position: absolute;
+    top: 50%;
+    display: inline-block;
+    margin: -16px 0 0 0;
+    z-index: 5;
+    left: 0;
+    right: 0;
+    color: rgba(0, 0, 0, 0.8);
+    text-shadow: none;
+    font-weight: bold;
+}
+
+.carousel .carousel-control.left i {
+	margin-left: -3px;
+}
+
+.carousel .carousel-control.left i {
+	margin-right: -3px;
+}
+
+.carousel .carousel-indicators {
+	bottom: -50px;
+}
+
+.carousel-indicators li, .carousel-indicators li.active {
+	width: 10px;
+	height: 10px;
+	margin: 4px;
+	border-radius: 50%;
+	border-color: transparent;
+}
+
+.carousel-indicators li {	
+	background: rgba(0, 0, 0, 0.2);
+}
+
+.carousel-indicators li.active {	
+	background: rgba(0, 0, 0, 0.6);
+=======
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
+>>>>>>> df6e01e87d28219210b40fe708a35f5fdd03e998
 }
