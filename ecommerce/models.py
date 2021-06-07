@@ -12,22 +12,12 @@ from mptt.fields import TreeForeignKey
 User._meta.get_field('username')._unique = True
 
 class CategoryBase(MPTTModel):
-    STATUS = (
-        ('True', 'True'),
-        ('False', 'False'),
-    )
     title = models.CharField(max_length=30)
     keywords= models.CharField(max_length=255)
     description = models.CharField(max_length=255)
-    image=models.ImageField(blank=True, upload_to = 'static/')
-    status=models.CharField(max_length=10, choices=STATUS)
     slug = models.SlugField()
-    parent = TreeForeignKey('self', blank =True, null = True, related_name = 'children', on_delete=models.CASCADE)
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
 
-    create_at = models.DateField(auto_now_add=True)
-    update_at = models.DateField(auto_now=True)
-
-    
     class MPTTMeta:
         order_insertion_by = ['title']
 
