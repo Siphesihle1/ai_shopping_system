@@ -6,59 +6,131 @@
 {% block content %}
 
 <div class="row">
-	
-	{% for product in products %}
 
-	<div class="modal fade bd-example-modal-lg" id="previewItemModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="col-lg-4">
-					<img class="thumbnail" src="{{product.imageURL}}">
-					<div class="box-element product">
-						<h6 class="h6name"><strong>			
-						</strong></h6>
-						<hr>		
-						{% if user.is_authenticated %}		
-						<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>			
-						{% endif %}
-						<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
-					</div>
-					<div class="row-md-9">
-						<h2>{{product.category}}</h2>
-						<h5 class="h5description"><strong></strong></h5>
+	<!--Product recommendation-->
+	{% if user.is_authenticated %}
+	<div class="row"><h2>Recommended For You</h2></div>
+	{% if recs %}
+
+	<div class="row">
+		{% for product in recs %}
+		<!--Product modal-->
+		<div class="modal fade bd-example-modal-lg" id="previewItemModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="col-lg-4">
+						<img class="thumbnail" src="{{product.imageURL}}">
+						<div class="box-element product">
+							<h6 class="h6name"><strong>			
+							</strong></h6>
+							<hr>		
+							{% if user.is_authenticated %}		
+							<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>			
+							{% endif %}
+							<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
+						</div>
+						<div class="row-md-9">
+							<h2>{{product.category}}</h2>
+							<h5 class="h5description"><strong></strong></h5>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>  
-	</div>
-
-
-	<div class="col-lg-4">
-		<img class="thumbnail" src="{{product.imageURL}}">
-		<div class="box-element product">
-			<h6><strong>{{product.name}}</strong></h6>
-			<hr>
-			{% if user.is_authenticated %}
-				<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
-				<button data-product="{{product.id}}" data-action="wish" class="btn btn-outline-secondary add-to-wishlist-btn">♡</button>
-			{% endif %}
-			<button id="view-btn" 
-			data-product="{{product.id}}" 
-			data-productName="{{product.name}}
-			data-productPrice="{{product.price|floatformat:2}}"
-			data-productImg="{{product.imageURL}}"
-			data-productDesc="{{product.description}}"
-			data-action="view" 
-			type="button" 
-			class="btn btn-primary view-product-btn" 
-			data-toggle="modal" 
-			data-target="#previewItemModal">View</button>
-
-			<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+			</div>  
 		</div>
-	</div>
 
-	{% endfor %} 
+		<!--Product block-->
+		<div class="col-lg-4">
+			<img class="thumbnail" src="{{product.imageURL}}">
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
+				{% if user.is_authenticated %}
+					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
+					<button data-product="{{product.id}}" data-action="wish" class="btn btn-outline-secondary add-to-wishlist-btn">♡</button>
+				{% endif %}
+				<button id="view-btn" 
+				data-product="{{product.id}}" 
+				data-productName="{{product.name}}"
+				data-productPrice="{{product.price|floatformat:2}}"
+				data-productImg="{{product.imageURL}}"
+				data-productDesc="{{product.description}}"
+				data-action="view" 
+				type="button" 
+				class="btn btn-primary view-product-btn" 
+				data-toggle="modal" 
+				data-target="#previewItemModal">View</button>
+
+				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	
+	{% else %}
+	<div class="row">
+	No recommendations yet
+	</div>
+	{% endif %}
+
+	{% endif %}
+
+	<div class="row"><h2>Product Catalogue</h2></div><br>
+	
+	<div class="row">
+		{% for product in products %}
+		
+		<!--Product modal-->
+		<div class="modal fade bd-example-modal-lg" id="previewItemModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="col-lg-4">
+						<img class="thumbnail" src="{{product.imageURL}}">
+						<div class="box-element product">
+							<h6 class="h6name"><strong>			
+							</strong></h6>
+							<hr>		
+							{% if user.is_authenticated %}		
+							<button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>			
+							{% endif %}
+							<h4 style="display: inline-block; float: right" class="h4price"><strong></strong></h4>
+						</div>
+						<div class="row-md-9">
+							<h2>{{product.category}}</h2>
+							<h5 class="h5description"><strong></strong></h5>
+						</div>
+					</div>
+				</div>
+			</div>  
+		</div>
+
+		<!--Product block-->
+		<div class="col-lg-4">
+			<img class="thumbnail" src="{{product.imageURL}}">
+			<div class="box-element product">
+				<h6><strong>{{product.name}}</strong></h6>
+				<hr>
+				{% if user.is_authenticated %}
+					<button data-product="{{product.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart add-to-cart-btn">Add to Cart</button>
+					<button data-product="{{product.id}}" data-action="wish" class="btn btn-outline-secondary add-to-wishlist-btn">♡</button>
+				{% endif %}
+				<button id="view-btn" 
+				data-product="{{product.id}}" 
+				data-productName="{{product.name}}"
+				data-productPrice="{{product.price|floatformat:2}}"
+				data-productImg="{{product.imageURL}}"
+				data-productDesc="{{product.description}}"
+				data-action="view" 
+				type="button" 
+				class="btn btn-primary view-product-btn" 
+				data-toggle="modal" 
+				data-target="#previewItemModal">View</button>
+
+				<h4 style="display: inline-block; float: right"><strong>${{product.price|floatformat:2}}</strong></h4>
+			</div>
+		</div>
+
+		{% endfor %} 
+	</div>
 
 </div>
 
