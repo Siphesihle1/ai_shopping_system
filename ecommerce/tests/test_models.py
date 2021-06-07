@@ -1,62 +1,225 @@
 
 from django.test import TestCase
-from store.models import Customer, Product, Order, OrderItem, ShippingAddress
+from django.contrib.auth.models import User
+from ecommerce.models import Customer, Product, Order, OrderItem, ShippingAddress, CustomerActivity, PurchaseHistory
+from django.test.client import Client
 
-class TestCustomersModel(TestCase):
+class TestCustomerModel(TestCase):
 
     def setUp(self):
-        self.data1 = Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
+        
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
 
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+        
     def test_customer_model_entry(self):
         """
         Test Customer model data insertion/types/field attributes
         """
-        data = self.data1
-        self.assertTrue(isinstance(data, Customer))
-        self.assertEqual(str(data), 'django')
-        
-class TestProductsModel(TestCase):
+        self.assertTrue(isinstance(self.user.customer, Customer))
+    
+    def test_username(self):
+        self.assertEqual(str(self.user.customer), 'django')
+    
+class TestProductModel(TestCase):
 
     def setUp(self):
-    
-        Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
-        self.data1 = Product.objects.create(price='20.00', name='django', digital=True, image='django')
-        self.data2 = Product.products.create(price='10.00',name='django1',digital=False, image='django1')
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        self.product1 = Product.objects.create(price=20.0, 
+            name='product1', digital=True, image='image_path1', 
+            description='TBD')
+
+        self.product2 = Product.objects.create(price=10.0,
+            name='product2',digital=False, image='image_path2',
+            description='TBD')
         
     def test_products_model_entry(self):
         """
         Test product model data insertion/types/field attributes
         """
-        data = self.data1
-        self.assertTrue(isinstance(data, Product))
-        self.assertEqual(str(data), 'django')
+        self.assertTrue(isinstance(self.product1, Product))
+        self.assertTrue(isinstance(self.product2, Product))
         
     def test_products_custom_manager_basic(self):
         """
         Test product model custom manager returns only active products
         """
-        data = Product.products.all()
-        self.assertEqual(data.count(), 2)
+        products = Product.objects.all()
+        self.assertEqual(products.count(), 2)
+
+    def test_product_name(self):    
+        self.assertEqual(str(self.product1), 'product1')
+        self.assertEqual(str(self.product2), 'product2')
         
         
-class TestOrderMode(TestCase):
+class TestOrderModel(TestCase):
 
     def setUp(self):
-        customer = Customer.objects.create(user='django',cellphone_no='0793942414',latitude='django10.10', longitude='django11.11')
-        self.data1 = Order.objects.create(customer, transaction_id='00001A', date_ordered='2020-01-01', complete=True)
-        self.data2 = Order.orders.create(customer, transaction_id='00001B', date_ordered='2020-02-01', complete=False)
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        self.order1 = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
+        self.order2 = Order.objects.create(customer=self.user.customer, transaction_id='00001B', complete=False)
         
+    def test_get_cart_items(self):
+        self.assertEqual(self.order1.get_cart_items, 0)
+        self.assertEqual(self.order2.get_cart_items, 0)
+
     def test_get_cart_total(self):
-        
-        orderitems=self.orderitem_set.all()
-        
+        self.assertEqual(self.order1.get_cart_total, 0.0)
+        self.assertEqual(self.order2.get_cart_total, 0.0)
+
+    def test_shipping(self):
+        self.assertEqual(self.order1.shipping, False)
+        self.assertEqual(self.order2.shipping, False)
+
+    def test_id(self):
+        self.assertEqual(str(self.order1.id), str(self.order1))
+        self.assertEqual(str(self.order2.id), str(self.order2))
+    
     def test_order_model_entry(self):
         """
         Test order model data insertion/types/field attributes
         """
-        data = self.data1
-        self.assertTrue(isinstance(data,Order))
-        self.assertEqual(str(data), 'django')
+        self.assertTrue(isinstance(self.order1, Order))
+        self.assertTrue(isinstance(self.order2, Order))
+
+class TestOrderItemModel(TestCase):
+    def setUp(self):
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        # Order Creation
+        self.order = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
         
-class TestOrderItem(TestCase):
-class TestShippingAddress(TestCase):
+        # Products
+        self.product1 = Product.objects.create(price=20.0, 
+            name='product1', digital=True, image='image_path1', 
+            description='TBD')
+
+        self.product2 = Product.objects.create(price=10.0,
+            name='product2', digital=False, image='image_path2',
+            description='TBD')
+
+        # Order items
+        self.order_item1 = OrderItem.objects.create(product=self.product1, order=self.order,
+            quantity=1)
+        self.order_item2 = OrderItem.objects.create(product=self.product2, order=self.order,
+            quantity=1)
+        
+    def test_get_total(self):
+        self.assertEqual(self.order_item1.get_total, 20.0)
+        self.assertEqual(self.order_item2.get_total, 10.0)
+    
+    def test_orderitem_model_entry(self):
+        self.assertTrue(isinstance(self.order_item1, OrderItem))
+        self.assertTrue(isinstance(self.order_item2, OrderItem))
+
+class TestShippingAddressModel(TestCase):
+    def setUp(self):
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        # Order Creation
+        self.order = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
+        
+        # Shipping Address
+        self.shipping_adddress = ShippingAddress.objects.create(customer=self.user.customer,
+            order=self.order, address='', city='', state='', zipcode='')
+        
+    def test_address(self):
+        self.assertEqual(str(self.shipping_adddress), '')
+    
+    def test_shipping_address_entry(self):
+        self.assertTrue(isinstance(self.shipping_adddress, ShippingAddress))
+
+class TestCustomerActivityModel(TestCase):
+    def setUp(self):
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        # Product creation
+        self.product = Product.objects.create(price=20.0, 
+            name='product', digital=True, image='image_path', 
+            description='TBD')
+
+        # Customer Activity
+        self.customer_activity = CustomerActivity.objects.create(customer=self.user.customer,
+            product=self.product, action=CustomerActivity.VIEW)
+        
+        
+    def test_product_name(self):
+        self.assertEqual(str(self.customer_activity), 'product')
+    
+
+    def test_customer_activity_entry(self):
+        self.assertTrue(isinstance(self.customer_activity, CustomerActivity))
+
+class TestPurchaseHistoryModel(TestCase):
+    def setUp(self):
+        # Sign up
+        password = 'django12345'
+        self.user = User.objects.create_user('django', 'django@test.com', password)
+        self.user.customer.cellphone_no = '0793942414'
+        self.user.save()
+
+        # Login
+        self.c = Client()
+        self.c.login(username=self.user.username, password=password)
+
+        # Order Creation
+        self.order = Order.objects.create(customer=self.user.customer, transaction_id='00001A', complete=True)
+        
+        # Shipping Address
+        self.shipping_adddress = ShippingAddress.objects.create(customer=self.user.customer,
+            order=self.order, address='', city='', state='', zipcode='')
+        
+        # Purchase history
+        self.purchase_history = PurchaseHistory.objects.create(username=self.user.customer,
+            order=self.order, state=self.shipping_adddress)
+
+    def test_purchase_history_entry(self):
+        self.assertTrue(isinstance(self.purchase_history, PurchaseHistory))
