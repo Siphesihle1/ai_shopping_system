@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -81,3 +82,6 @@ class TestOrderHistoryView(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
 
+=======
+from django.test import TestCase
+>>>>>>> c6d10c408df4e3d98410e022cc2666ac4230f2b8
