@@ -7,27 +7,146 @@
         <div class="row">
             <div class="col-md-8">    
                 <h3>Previous Orders</h3>
-                <hr>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>{{order.customer.user}}</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table> 
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Order ID</th>
-                            <th>Total Amount</th>
-                            <th>Date ordered</th>
-                            <th>Status</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        {%for ord in orders%}
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
                         <tr>
-                            <td>{{forloop.counter}}</td>                            
-                            <td>{{ord.total}}</td>
-                            <td>{{ord.date_ordered}}</td>
-                            <td>Delivered</td>
+                            <td>#ORDER_{{order.id}}</td>
+                           
                         </tr>
                         {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
                     </tbody>
-                </table>        
+                </table>   
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Ordered Items Quantity</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>{{order.get_cart_items}}</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table>   
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Total Amount</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>R{{order.get_cart_total}}</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Date Ordered</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>{{order.date_ordered| date:"SHORT_DATE_FORMAT"}}</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table> 
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Status</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>Delivered</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table>  
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Address</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {%if order.complete == true%}
+                        {%for order in order_s%}
+                        <tr>
+                            <td>{{"Address"}}</td>
+                           
+                        </tr>
+                        {%endfor%}
+                        {% else %}
+			                <p id="cart-message">No Previous orders to show</p>
+			            {% endif %}
+                    </tbody>
+                </table>       
             </div>
             <div class="col-md-8">
             </div>  
