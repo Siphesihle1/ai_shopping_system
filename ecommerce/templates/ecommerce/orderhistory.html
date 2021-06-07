@@ -7,34 +7,27 @@
         <div class="row">
             <div class="col-md-8">    
                 <h3>Previous Orders</h3>
+                <hr>
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Username</th>
                             <th>Order ID</th>
-                            <th>Ordered Items Quantity</th>
                             <th>Total Amount</th>
                             <th>Date ordered</th>
                             <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {%if order.complete == true%}
-                        {%for order in order_s%}
+                        {%for ord in orders%}
                         <tr>
-                            <td>{{order.customer.user}}</td>
-                            <td>#ORDER_{{order.id}}</td> 
-                            <td>{{order.get_cart_items}}</td>                          
-                            <td>R{{order.get_cart_total}}</td>
-                            <td>{{order.date_ordered| date:"SHORT_DATE_FORMAT"}}</td>
+                            <td>{{forloop.counter}}</td>                            
+                            <td>{{ord.total}}</td>
+                            <td>{{ord.date_ordered}}</td>
                             <td>Delivered</td>
                         </tr>
                         {%endfor%}
-                        {% else %}
-			                <p id="cart-message">No Previous orders to show</p>
-			            {% endif %}
                     </tbody>
-                </table>      
+                </table>        
             </div>
             <div class="col-md-8">
             </div>  

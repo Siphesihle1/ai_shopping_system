@@ -5,6 +5,18 @@ body{
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }
+.scrolling-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+  }
+.card {
+	display: inline-block;
+	flex: 0 0 auto;
+}
 
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;

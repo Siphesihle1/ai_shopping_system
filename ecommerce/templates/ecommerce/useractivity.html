@@ -8,18 +8,18 @@
 {% endblock style%}
 
 {% block content %}
-<h2>Recently viewed items</h2> <!--The heading was initially 'Activity feed'-->
+<h2>Activity Feed</h2>
 
 {% if activity_logs %}
 <div class="activity-feed">
 {% for log in activity_logs%}
     
     <div class="feed-item">
-        <div class="date">{{ log.event_date | date:"D d M Y H:i"}}</div>
+        <div class="date">{{ log.event_date | date:"SHORT_DATE_FORMAT"}}</div>
         {% if log.action == "A" %}
-        <div class="text">You added the {{ log.product }} to cart.</div>
+        <div class="text">You added {{ log.count }} {{ log.product }} product{% if log.count > 1%}s{% endif %} to cart.</div>
         {% else %}
-        <div class="text">{{ log.product }}</div> <!--You viewed the {{ log.product }}.-->
+        <div class="text">You viewed the {{ log.product }} {{ log.count }} time{% if log.count > 1%}s{% endif %}.</div>
         {% endif %}
     </div>
 {% endfor %}
