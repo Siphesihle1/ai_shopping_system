@@ -1,4 +1,5 @@
 # Django HTTP
+from hashlib import new
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -7,7 +8,7 @@ import json
 import datetime        
 
 # Django Login
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import get_user, login, authenticate, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
@@ -29,8 +30,68 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import View
 from django.views.generic import TemplateView
 from ecommerce.models import CategoryBase, Product
+import random
 
 # Create your views here.
+
+def get_max_category(products):  
+    categories = [product.category.id for product in products]
+    return max(categories, key=categories.count) # returns the most frequent category
+
+def get_user_recs(customer):
+
+    logs = CustomerActivity.objects.filter(customer=customer, action=CustomerActivity.VIEW)
+    recent_logs = []
+
+    # For new users with no user activity
+    if logs:
+        recent_logs = logs.order_by('-event_date')[:20]
+    else:
+        return []
+
+    products = [log.product for log in recent_logs]
+    
+    max_category = get_max_category(products)
+    
+    # Get all the products with max_category
+    rec_products = [product for product in products if product.category.id == max_category]
+
+    return rec_products
+
+
+def get_orderhistory_recs(customer):
+
+    orders = Order.objects.filter(customer=customer, complete=True)
+    order = dict()
+
+    # For new users who haven't made any orders
+    if orders:
+        order = orders.order_by('-date_ordered')[0]
+    else:
+        return []
+
+    order_items = OrderItem.objects.filter(order=order)
+
+    products = [order_item.product for order_item in order_items]
+
+    max_category = get_max_category(products)
+
+    # Get all the product with max category
+    rec_products = [product for product in products if product.category.id == max_category]
+    
+    # Return randomly selected products (provided that the number of product is at least than 10)
+    if (len(rec_products) >= 10):
+        return random.sample(rec_products, 10)
+    else:
+        return rec_products
+
+
+def get_recs(customer):
+
+    recs = get_user_recs(customer)
+    recs.append(get_orderhistory_recs(customer))
+    
+    return recs
 
 @with_ip_geolocation
 def store(request):
@@ -45,16 +106,21 @@ def store(request):
             customer.longitude = location["geo"]["longitude"]
             u.save()
 
+        # Get product recommendations
+        recs = get_recs(customer)
+
+        # Get order info
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
         cartItems = 0
-
+        recs = []
+    
     products = Product.objects.all()
     categorybase = CategoryBase.objects.all()
-    context = {'products':products,'categorybase':categorybase, 'cartItems':cartItems}
 
+    context = {'products':products,'categorybase':categorybase, 'cartItems':cartItems, 'recs': recs}
 
     return render(request, 'ecommerce/store.html', context)
 
@@ -365,3 +431,4 @@ def PurchaseHistory(request):
         return redirect('store')
 
 
+    
