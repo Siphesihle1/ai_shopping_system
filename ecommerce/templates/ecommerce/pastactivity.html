@@ -1,0 +1,31 @@
+{% extends 'ecommerce/main.html' %}
+{% load static %}
+
+{% block title %}Past activity{% endblock title%}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'ecommerce/feed.css' %}">
+{% endblock style%}
+
+{% block content %}
+<h2>Recently viewed items</h2> <!--The heading was initially 'Activity feed'-->
+
+{% if activity_logs %}
+<div class="activity-feed">
+{% for log in activity_logs%}
+    
+    <div class="feed-item">
+        <div class="date">{{ log.event_date | date:"D d M Y H:i"}}</div>
+        {% if log.action == "A" %}
+        <div class="text">You added the {{ log.product }} to cart.</div>
+        {% else %}
+        <div class="text">{{ log.product }}</div> <!--You viewed the {{ log.product }}.-->
+        {% endif %}
+    </div>
+{% endfor %}
+</div>
+{% else %}
+<p id="log-message">Nothing to see here</p>
+{% endif %}
+
+{% endblock content %}
