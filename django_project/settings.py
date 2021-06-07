@@ -26,12 +26,17 @@ SECRET_KEY = 'django-insecure-3f*v1r=bl#ufa_c-k7v*$3u@914v055^9!!@sk#93l=iiadpi(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['148.100.76.106', 'localhost']
+ALLOWED_HOSTS = ['148.100.76.106','127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+        #categories
+        #"categories",
+        #"categories.editor",
+        'mptt',
+
         'ecommerce.apps.EcommerceConfig',
         'django.contrib.admin',
         'django.contrib.auth',
@@ -90,12 +95,9 @@ DATABASES = {
             'PASSWORD' : 'admin12345',
             'HOST' : '148.100.76.106' ,
             'PORT' : '5432',
-            'TEST' : {
-                'NAME': 'test_db',
-            },
-        }
+            }    
 
-    }
+        }
 
 
 # Password validation
@@ -122,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'Africa/Johannesburg'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -141,8 +143,6 @@ STATICFILES_DIRS = [
         ]
 
 MEDIA_URL = '/ecommerce/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static/assets')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ecommerce')
 
@@ -179,5 +179,5 @@ MESSAGE_TAGS = {
         messages.INFO: 'alert-info',
         messages.SUCCESS: 'alert-success',
         messages.WARNING: 'alert-warning',
-        messages.ERROR: 'alert-danger',
+        messages.ERROR: 'alert-danger',        
 }
