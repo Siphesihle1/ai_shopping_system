@@ -10,12 +10,10 @@ class OrderForm(ModelForm):
         fields = '__all__'
 
 class LoginForm(forms.Form):
-
     username = forms.CharField(required=True)
     password = forms.CharField(required=True, widget=forms.PasswordInput())
 
 class UserForm(ModelForm):
-
     email = forms.EmailField(required=True)
     first_name = forms.CharField(required=True)
     last_name = forms.CharField(required=True)

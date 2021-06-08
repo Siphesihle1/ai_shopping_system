@@ -9,8 +9,8 @@
 
 	<!--Product recommendation-->
 	{% if user.is_authenticated %}
-	<div class="row"><h2>Recommended For You</h2></div>
 	{% if recs %}
+	<div class="row"><h2>Recommended For You</h2></div>
 
 	<div class="row">
 		{% for product in recs %}
@@ -64,19 +64,7 @@
 			</div>
 		</div>
 		{% endfor %}
-<<<<<<< HEAD
 	</div>
-	
-	{% else %}
-
-=======
-	</div>
-	
-	{% else %}
-	<div class="row">
-	No recommendations yet
-	</div>
->>>>>>> 6380616b53e5c97c84e84d3bb94cdd50d4e25244
 	{% endif %}
 
 	{% endif %}

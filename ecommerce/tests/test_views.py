@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
@@ -82,6 +81,18 @@ class TestOrderHistoryView(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
 
-=======
-from django.test import TestCase
->>>>>>> c6d10c408df4e3d98410e022cc2666ac4230f2b8
+class TestOrderHistoryView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.order_history_url = reverse('orderhistory')
+        self.user = User.objects.create(username='django')
+        self.user.set_password('12345')
+        self.user.save()
+        self.client.login(username='django', password='12345')
+
+    def test_request_checkout(self):
+        response = self.client.get(self.order_history_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
+

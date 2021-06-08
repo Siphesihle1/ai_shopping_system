@@ -88,10 +88,15 @@ def get_orderhistory_recs(customer):
 
 def get_recs(customer):
 
-    recs = get_user_recs(customer)
-    recs.append(get_orderhistory_recs(customer))
+    recs = get_user_recs(customer) + get_orderhistory_recs(customer)
+    new_recs = []
     
-    return recs
+    for rec in recs:
+        identical_recs = [item for item in new_recs if item.id == rec.id]
+        if (len(identical_recs) == 0):
+            new_recs.append(rec)
+    
+    return new_recs
 
 @with_ip_geolocation
 def store(request):
