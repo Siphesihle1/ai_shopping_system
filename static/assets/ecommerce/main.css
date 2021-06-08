@@ -5,6 +5,37 @@ body{
 h1,h2,h3,h4,h5,h6{
 	color:hsl(0, 0%, 30%);
 }
+.scrolling-wrapper {
+	overflow-x: scroll;
+	overflow-y: hidden;
+	white-space: nowrap;
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+}
+
+nav.bg-dark{
+	background-color: #4f868c!important;
+}	
+
+li.active>a {
+	text-decoration: none;
+}
+
+ul.nav>li>a {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+ul.nav>li>a:hover {
+	text-decoration: none;
+	color: #FFFFFF;
+}
+
+.card {
+	display: inline-block;
+	flex: 0 0 auto;
+}
 
 .box-element{
 	box-shadow:hsl(0, 0%, 80%) 0 0 16px;
@@ -25,9 +56,7 @@ h1,h2,h3,h4,h5,h6{
 	border-radius: 0 0 4px 4px;
 }
 
-.bg-dark{
-	background-color: #4f868c!important;
-}
+
 
 #cart-icon{
 	width:25px;
@@ -113,4 +142,36 @@ h1,h2,h3,h4,h5,h6{
 
 .hidden{
 	display: none !important;
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  max-width: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  font-family: arial;
+}
+
+.price {
+  color: grey;
+  font-size: 22px;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 12px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+}
+
+.card button:hover {
+  opacity: 0.7;
 }
