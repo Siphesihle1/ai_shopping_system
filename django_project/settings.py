@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['148.100.76.106']
 # Application definition
 
 INSTALLED_APPS = [
+
         'ecommerce.apps.EcommerceConfig',
         'django.contrib.admin',
         'django.contrib.auth',

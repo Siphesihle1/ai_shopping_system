@@ -1,43 +1,39 @@
 {% extends 'ecommerce/main.html' %}
+{% load static %}
 
-{%block title%}My Orders{%endblock%}
+{% block title%}Order History{% endblock title%}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">    
-                <h3>Previous Orders</h3>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Username</th>
-                            <th>Order ID</th>
-                            <th>Ordered Items Quantity</th>
-                            <th>Total Amount</th>
-                            <th>Date ordered</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {%if order.complete == true%}
-                        {%for order in order_s%}
-                        <tr>
-                            <td>{{order.customer.user}}</td>
-                            <td>#ORDER_{{order.id}}</td> 
-                            <td>{{order.get_cart_items}}</td>                          
-                            <td>R{{order.get_cart_total}}</td>
-                            <td>{{order.date_ordered| date:"SHORT_DATE_FORMAT"}}</td>
-                            <td>Delivered</td>
-                        </tr>
-                        {%endfor%}
-                        {% else %}
-			                <p id="cart-message">No Previous orders to show</p>
-			            {% endif %}
-                    </tbody>
-                </table>      
-            </div>
-            <div class="col-md-8">
-            </div>  
-        </div>
-    </div>
-{% endblock content %}                
+
+<div class="row">
+
+	<div class="col-lg-6">
+		<div class="box-element">
+			
+            {%if order.complete == False%}
+                {% for item in items %}
+                    <hr>
+                    <h5>Date Ordered : {{order.date_ordered}}</h5>
+                    <hr>
+                    <div class="cart-row">
+                        <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                        <div style="flex:2"><p>{{item.product.name}}</p></div>
+                        <div style="flex:1"><p>R{{item.product.price|floatformat:2}}</p></div>
+                        <div style="flex:1"><p>x{{item.quantity}}</p></div>
+                    </div>
+                {% endfor %}
+
+			<h5>Items:   {{order.get_cart_items}}</h5>
+			<h5>Total:   R{{order.get_cart_total|floatformat:2}}</h5>
+            <h5>Address:   {{shipping.address}}</h5>
+            <h5>Order ID:   {{order.id}}</h5>
+
+            {%else%}
+                <p> No previous orders to show </p>
+            {%endif%}
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+

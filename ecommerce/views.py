@@ -82,6 +82,8 @@ def checkout(request):
         cartItems = order.get_cart_items
         total = order.get_cart_total
 
+        
+
         context = {'items':items, 'order':order, 'cartItems':cartItems, 'total':total}
         return render(request, 'ecommerce/checkout.html', context)
     else:
@@ -134,11 +136,8 @@ def processOrder(request):
         order.transaction_id = transaction_id
         print(total, transaction_id)
 
-        if total == order.get_cart_total:
-            order.complete = True
-            order.save()
-
         if order.shipping == True:
+           
             ShippingAddress.objects.create(
                 customer=customer,
                 order=order,
@@ -146,6 +145,14 @@ def processOrder(request):
                 city=data['shipping']['city'],
                 state=data['shipping']['state'],
                 zipcode=data['shipping']['zipcode'],
+            )
+
+        if order.shipping == True:
+            Order.objects.create(
+            customer=customer,
+            date_ordered=datetime.datetime.now().timestamp(),
+            transaction_id=order.id,
+            complete=True,
             )
 
 
@@ -181,23 +188,19 @@ def deletefromcart(request, id):
 @login_required
 def emptyCart(request):
 
-    # Get customer information
+   # Get customer information
     u = request.user
     customer = Customer.objects.get(user_id=u.id)
+    #n = u.id
 
     # Get order information
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
+    order = get_cart_items
+    
     # Delete order
     order.delete()
 
-    # Get the new order items
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    items = order.orderitem_set.all()   
-    cartItems = order.get_cart_items
-    
-    context = {'items':items, 'order':order, 'cartItems':cartItems}
-    return render(request, 'ecommerce/cart.html', context)
+    #context = { 'order':order }
+    return render(request, 'ecommerce/cart.html')
 
 @login_required
 def storeCustomerActivity(request):
@@ -335,31 +338,41 @@ def Logout(request):
 @login_required
 def order_history(request):
     u = request.user
+    #o= request.id
     customer = Customer.objects.get(user_id=u.id)
-    order_s = Order.objects.filter(customer=customer)
-    context = { 'order_s': order_s}
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    #shipping, created = ShippingAddress.objects.get_or_create(customer=customer,id = o.order_id)
+
+    
+    items = order.orderitem_set.all()
+    context = {'order': order,'items':items}
 
     return render(request, 'ecommerce/orderhistory.html', context)   
 
-@csrf_exempt
+#@csrf_exempt
+@login_required
 def PurchaseHistory(request):
-    
+
     if request.user.is_authenticated:
 
-        transaction_id = datetime.datetime.now().timestamp()
-        data = json.loads(request.body)
+        data = json.loads(request.body),
 
         u = request.user
         customer = Customer.objects.get(user_id=u.id)
         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        shipping, created = ShippingAddress.objects.get_or_create(customer=customer, complete=False)
         total = order.get_cart_total
+        address = shipping.address
+        state = shipping.state
+        quantity = order.get_cart_items 
+        date_ordered = order.date_ordered
 
         if order.complete == True:
-            p = PurchaseHistory(username = customer, order = customer, date_added = order.transaction_id, state = 'Delivered')
+            p = PurchaseHistory(user = customer,  order = order, date = date_ordered, state = state, address = address,total = total, product = order, quantity = quantity)
             p.save()
 
         return JsonResponse('Stored', safe=False)
     else:
-        return redirect('store')
+        return redirect('store') 
 
 

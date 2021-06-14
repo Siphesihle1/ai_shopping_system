@@ -129,15 +129,18 @@ class CustomerActivity(models.Model):
         return self.product.name
     
 class PurchaseHistory(models.Model):
-    username = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
-    date_added = models.ForeignKey(OrderItem, on_delete=models.SET_NULL, null=True)
-    state=models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, null=True)
 
-    @property
-    def get_total(self):
-        total = self.product.price * self.orderitem.quantity
-        return total
+    user = models.ForeignKey(Customer, on_delete=models.SET_NULL,blank=True, null=True)
+    order = models.CharField(max_length=10,null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    state= models.CharField(max_length=200, null=False)
+    address = models.CharField(max_length=200, null=True)
+    total = models.IntegerField(default=0,null=True,blank=True)
+    product = models.CharField(max_length=200, null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.id)
     
  
 
