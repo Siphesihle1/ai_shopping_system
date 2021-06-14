@@ -1,0 +1,50 @@
+*LoginForm
+      """Form used by user to login into our system """
+
+    - Attributes
+        Username charfield, required = True
+        Password charfield, required = True
+        
+*UserForm
+
+    """Form used by user to login into our system """
+    
+    -Attributes
+    
+        email EmailField , required = True
+        first_name CharField, required = True
+        last_name CharField, required = True
+        username CharField, required = True
+        password CharField, required = True
+        
+     Methods/Functions
+     
+        def Clean():
+          Validates the username and password provided by the user
+          Returns "The username/password exists" if username and password are valid
+                    else it returns "password and username don't match"
+                    
+*CustomerForm
+    
+     """Form used by user to login into our system """
+     
+     -Attributes
+        Cellphone_no (cleaneddata)
+      
+      the function returns 
+          "The cellphone is invalid" if
+          else 
+             if the number does not start with zero and the length is not 10
+                returns "Cellphone_no invalid"
+             else 
+                returns "the cellphone_no is valid"
+            
+     
+     
+     
+     
+     
+     
+     
+     
+     

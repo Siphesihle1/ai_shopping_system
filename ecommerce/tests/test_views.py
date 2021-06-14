@@ -51,4 +51,48 @@ class TestCheckoutView(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'ecommerce/checkout.html')
 
+class TestCustomerActivityView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.past_activity_url = reverse('past_activity')
+        self.user = User.objects.create(username='django')
+        self.user.set_password('12345')
+        self.user.save()
+        self.client.login(username='django', password='12345')
+
+    def test_request_checkout(self):
+        response = self.client.get(self.past_activity_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/pastactivity.html')
+
+class TestOrderHistoryView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.order_history_url = reverse('orderhistory')
+        self.user = User.objects.create(username='django')
+        self.user.set_password('12345')
+        self.user.save()
+        self.client.login(username='django', password='12345')
+
+    def test_request_checkout(self):
+        response = self.client.get(self.order_history_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
+
+class TestOrderHistoryView(TestCase):
+
+    def setUp(self):
+        self.client = Client()
+        self.order_history_url = reverse('orderhistory')
+        self.user = User.objects.create(username='django')
+        self.user.set_password('12345')
+        self.user.save()
+        self.client.login(username='django', password='12345')
+
+    def test_request_checkout(self):
+        response = self.client.get(self.order_history_url)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
 

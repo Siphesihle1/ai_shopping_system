@@ -3,10 +3,29 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from mptt.models import MPTTModel
+from mptt.fields import TreeForeignKey
+
 
 # Create your models here.
 
 User._meta.get_field('username')._unique = True
+
+class CategoryBase(MPTTModel):
+    title = models.CharField(max_length=30)
+    keywords= models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    slug = models.SlugField()
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
+    def __str__(self):
+        return self.title
+
+    
+    
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -31,6 +50,8 @@ class Product(models.Model):
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
     description = models.CharField(max_length=1000, null=True)
+    category = models.ForeignKey(CategoryBase, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.name
