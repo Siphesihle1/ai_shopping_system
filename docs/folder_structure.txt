@@ -1,35 +1,68 @@
-[SD-Group-24]/                 
-├── [projectname]/              
-│   ├── __init__.py
-│   ├── apps/
-│   │   ├── __init__.py
-│   │   ├── views.py  
-│   │   ├── model.py
-│   │   ├── ...      
-│   ├── settings/
-│   │   ├── __init__.py
-│   │   ├── development.py
-│   │   └── production.py
-│   ├── urls.py
-│   └── wsgi.py
-├── docs/
-│   ├── project_docs.txt
-│   ├── ...
-├── manage.py
-├── static/
-│    └── css/ 
-│       ├── main.css
-│       └── ...
-├── templates/
-│    └── app/ 
-├── test/
-│    └── app/ 
-│       ├── test_*.js
-│       └── ...
-├── .gitignore
-├── .db.sqlite3
-├── .LICENSE
-├── .manage.py
-├── .pytest.ini
-├── .README.md
-└── requirements.txt
+
+    ├── django_project
+    │       ├── /__pycache__/
+    │       |       └── __init__.cpython-36.pyc
+    |       |       └──__init__.cpython-38.pyc
+    |       |       └──settings.cpython-36.pyc
+    |       |       └──urls.cpython-36.pyc
+    |       |       └──urls.cpython-38.pyc
+    |       |       └──wsgi.cpython-36.pyc
+    |       |       └──wsgi.cpython-38.pyc
+    │       ├── __init__.py
+    │       ├── asgi.py
+    │       ├── settings.py
+    │       ├── urls.py
+    |       ├── wsgi.py
+    |
+    ├── Docs
+    ├── ecommerce
+│   │    └── __init__.py
+│   |    ├── templates
+│   │    |  └── blog
+│   │    |  ├── base.html
+│   │    |  ├── post_detail.html
+│   │    |  ├── post_edit.html
+│   │    |  └── post_list.html
+│   |    ├── tests.py
+│   |    ├── urls.py
+│   |    └── views.py
+│   |
+│   ├── static
+│   │   └── assets
+│   │   |    └── admin
+|   |   |    |      └── css
+|   |   |    |      |      ├── vendor/select2
+|   |   |    |      |      |      ├── LICENSE-SELECT2.md
+|   |   |    |      |      |      ├── select2.css
+|   |   |    |      |      |      ├── select2.min.css 
+│   |   |    |      |      ├── urls.py
+│   |   |    |      |      └── views.py
+│   |   |    |      |      ├── urls.py
+│   |   |    |      |      └── views.py
+│   |   |    |      |      ├── autocomplete.css
+│   |   |    |      |      └── base.css
+|   |   |    |      |      ├── changelists.css
+│   |   |    |      |      ├── dashboard.css
+│   |   |    |      |      └── fonts.css
+|   |   |    |      |      ├── forms.css
+│   |   |    |      |      ├── login.css
+│   |   |    |      |      └── nav_sidebar.css
+|   |   |    |      |      ├── respo nsive_rtl.css
+│   |   |    |      |      ├── rtl.css
+│   |   |    |      |      └── widgets.css
+|   |   |    |      ├──fonts
+|   |   |    |      ├──img
+|   |   |    |      ├──js
+|   |   |    |
+|   |   |    └── ecommerce
+|   |   |           └── ......
+│   ├── .gitignore
+|   ├── .travis.yml
+|   ├── datadump.json
+|   ├── dump.json
+|   ├── manage.py
+|   ├── requirements.txt
+|   ├── README.md
+
+
+7 directories, 26 files
