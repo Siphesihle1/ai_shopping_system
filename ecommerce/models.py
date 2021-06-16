@@ -3,10 +3,29 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.urls import reverse
+from mptt.models import MPTTModel
+from mptt.fields import TreeForeignKey
+
 
 # Create your models here.
 
 User._meta.get_field('username')._unique = True
+
+class CategoryBase(MPTTModel):
+    title = models.CharField(max_length=30)
+    keywords= models.CharField(max_length=255)
+    description = models.CharField(max_length=255)
+    slug = models.SlugField()
+    parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+
+    class MPTTMeta:
+        order_insertion_by = ['title']
+
+    def __str__(self):
+        return self.title
+
+    
+    
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True)
@@ -31,6 +50,8 @@ class Product(models.Model):
     digital = models.BooleanField(default=False, null=True, blank=False)
     image = models.ImageField(null=True, blank=True)
     description = models.CharField(max_length=1000, null=True)
+    category = models.ForeignKey(CategoryBase, on_delete=models.CASCADE)
+    
 
     def __str__(self):
         return self.name
@@ -49,6 +70,9 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=200, null=True)
     date_ordered = models.DateTimeField(auto_now_add=True)
     complete=models.BooleanField(default=False, null=True, blank=False)
+    class Meta:
+        db_table = "ecommerce_order"
+
 
     def __str__(self):
         return str(self.id)
@@ -90,8 +114,8 @@ class OrderItem(models.Model):
 
 
 class ShippingAddress(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
+    customer=models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
+    order=models.ForeignKey(Order, on_delete=models.SET_NULL, null=True)
     address=models.CharField(max_length=200, null=False)
     city=models.CharField(max_length=200, null=False)
     state=models.CharField(max_length=200, null=False)
@@ -105,20 +129,39 @@ class ShippingAddress(models.Model):
 class CustomerActivity(models.Model):
     ADD = "A"
     VIEW = "V"
-    ACTIONS = [(ADD, "add"), (VIEW, "view"),]
+    WISH = "W"
+    ACTIONS = [(ADD, "add"), (VIEW, "view"), (WISH, "wish"),]
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=True, null=True)
-    
+
+    class Meta:
+        verbose_name_plural = 'Customer activities'
+
     action = models.CharField(
         max_length=1,
         choices=ACTIONS,
         default=ADD,
     )
 
-    count = models.IntegerField(default=0, null=True, blank=True)
-    event_date=models.DateTimeField(auto_now_add=True)
+    event_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.product.name
+    
+class PurchaseHistory(models.Model):
+
+    user = models.ForeignKey(Customer, on_delete=models.SET_NULL,blank=True, null=True)
+    order = models.CharField(max_length=10,null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    state= models.CharField(max_length=200, null=False)
+    address = models.CharField(max_length=200, null=True)
+    total = models.IntegerField(default=0,null=True,blank=True)
+    product = models.CharField(max_length=200, null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
+
+    def __str__(self):
+        return str(self.id)
+    
+ 
 
