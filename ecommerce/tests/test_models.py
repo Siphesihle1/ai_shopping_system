@@ -2,6 +2,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 from ecommerce.models import Customer, Product, Order, OrderItem, ShippingAddress, CustomerActivity, PurchaseHistory
+from ecommerce.forms import *
 from django.test.client import Client
 
 class TestCustomerModel(TestCase):
