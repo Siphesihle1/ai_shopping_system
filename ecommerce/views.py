@@ -422,31 +422,28 @@ def order_history(request):
 
     return render(request, 'ecommerce/orderhistory.html', context)   
 
-#@csrf_exempt
 @login_required
 def PurchaseHistory(request):
 
-    if request.user.is_authenticated:
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    shipping, created = ShippingAddress.objects.get_or_create(customer=customer, order=order.id)
+    total = order.get_cart_total
+    address = shipping.address
+    status = shipping.state
+    quantity = order.get_cart_items 
 
-        data = json.loads(request.body),
-
-        u = request.user
-        customer = Customer.objects.get(user_id=u.id)
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        shipping, created = ShippingAddress.objects.get_or_create(customer=customer, complete=False)
-        total = order.get_cart_total
-        address = shipping.address
-        state = shipping.state
-        quantity = order.get_cart_items 
-        date_ordered = order.date_ordered
-
-        if order.complete == True:
-            p = PurchaseHistory(user = customer,  order = order, date = date_ordered, state = state, address = address,total = total, product = order, quantity = quantity)
-            p.save()
-
-        return JsonResponse('Stored', safe=False)
-    else:
-        return redirect('store') 
+    PurchaseHistory.objects.create(
+    customer=customer,
+    transaction_id=order.id,
+    date_ordered=datetime.datetime.now().timestamp(),
+    status="Delivered",
+    address=address,
+    total=total,
+    product="product name",
+    quantity=quantity,
+    )
 
 
     
