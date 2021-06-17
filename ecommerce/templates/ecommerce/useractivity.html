@@ -18,8 +18,10 @@
         <div class="date">{{ log.event_date | date:"SHORT_DATE_FORMAT"}}</div>
         {% if log.action == "A" %}
         <div class="text">You added {{ log.count }} {{ log.product }} product{% if log.count > 1%}s{% endif %} to cart.</div>
-        {% else %}
+        {% elif log.action =="V"  %}
         <div class="text">You viewed the {{ log.product }} {{ log.count }} time{% if log.count > 1%}s{% endif %}.</div>
+        {%else%}
+        <div class="text">You added {{ log.product }} to your wish list. {% endif %}</div>
         {% endif %}
     </div>
 {% endfor %}

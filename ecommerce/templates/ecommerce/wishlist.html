@@ -6,6 +6,9 @@
 {% block content %}
 <h1>Wishlist</h1>
 	{% if activity_logs %}
+	<table class="table">
+	<a  style="float:right; margin:5px;" class="btn btn-danger" href="{% url 'empty_wishlist' %}">Empty Wishlist</a>
+	</table>	
 	<br>
 	<div class="cart-row">
             <div style="flex:2"></div>
@@ -22,12 +25,14 @@
 			<div style="flex:2"><p>{{log.product.name}}</p></div>
 			<div style="flex:2"><p>${{log.product.price|floatformat:2}}</p></div>
 			<div style="flex:2"><p>{{log.event_date}}</p></div>
-			<div style="flex:1"><a class="btn btn-success remove-from-wishlist-btn">+</a></div>
+			<div style="flex:1"><a class="btn btn-success add-wisheditem-to-cart-btn">+</a></div>
 			<div style="flex:1"><a class="btn btn-danger remove-from-wishlist-btn">x</a></div>
 		
 		</div>
 		{% endfor %}
 	</div>
+	{% else %}
+	<p id="log-message">Nothing to see here</p>
 	{% endif %}
 {% endblock content %}
 

@@ -16,6 +16,7 @@ urlpatterns = [
 	path('past_activity/', views.customer_activity, name="past_activity"),
 	path('orderhistory/', views.order_history, name="orderhistory"),
 	path('wished_items/', views.wished_items, name="wished_items"),
+	path('empty_wishlist', views.empty_wishlist, name="empty_wishlist"),
 ]
 
 

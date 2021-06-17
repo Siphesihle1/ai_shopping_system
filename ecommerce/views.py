@@ -346,6 +346,20 @@ def wished_items(request):
 
     return render(request, 'ecommerce/wishlist.html', context)
 
+@login_required
+def empty_wishlist(request):
+    u = request.user
+    customer = Customer.objects.get(user_id=u.id)
+
+    # Delete wished items
+    CustomerActivity.objects.filter(customer=customer, action=CustomerActivity.WISH).delete()
+
+    # Get the new order items
+    order, created = Order.objects.get_or_create(customer=customer, complete=False) 
+    cartItems = order.get_cart_items
+   
+    context = {'cartItems':cartItems}
+    return render(request, 'ecommerce/wishlist.html', context)
 
 def signup(request):
 
