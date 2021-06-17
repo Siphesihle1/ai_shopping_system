@@ -57,3 +57,14 @@ Table CategoryBase:
     description = models.CharField(max_length=255)
     slug = models.SlugField()
     parent = TreeForeignKey('self', blank=True, null=True, related_name='children', on_delete=models.CASCADE)
+    
+   Table PurchaseHistory:
+
+    user = models.ForeignKey(Customer, on_delete=models.SET_NULL,blank=True, null=True)
+    order = models.CharField(max_length=10,null=True)
+    date = models.DateTimeField(auto_now_add=True)
+    state= models.CharField(max_length=200, null=False)
+    address = models.CharField(max_length=200, null=True)
+    total = models.IntegerField(default=0,null=True,blank=True)
+    product = models.CharField(max_length=200, null=True)
+    quantity = models.IntegerField(default=0, null=True, blank=True)
