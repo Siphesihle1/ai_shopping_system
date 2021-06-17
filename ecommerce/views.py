@@ -427,7 +427,7 @@ def order_history(request):
     u = request.user
     customer = Customer.objects.get(user_id=u.id)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    shipping, created = ShippingAddress.objects.get_or_create(customer=customer, order_id=order)
+    shipping = ShippingAddress.objects.filter(customer=customer, order=order).all()
 
     
     items = order.orderitem_set.all()
