@@ -1,8 +1,44 @@
 {% extends 'ecommerce/main.html' %}
+{% load static %}
 
-{%block title%}My Orders{%endblock%}
+{% block title%}Order History{% endblock title%}
 
 {% block content %}
+<<<<<<< HEAD
+
+<div class="row">
+
+	<div class="col-lg-6">
+		<div class="box-element">
+			
+            {%if order.complete == False%}
+                {% for item in items %}
+                    <hr>
+                    <h5>Date Ordered : {{order.date_ordered}}</h5>
+                    <hr>
+                    <div class="cart-row">
+                        <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
+                        <div style="flex:2"><p>{{item.product.name}}</p></div>
+                        <div style="flex:1"><p>R{{item.product.price|floatformat:2}}</p></div>
+                        <div style="flex:1"><p>x{{item.quantity}}</p></div>
+                    </div>
+                {% endfor %}
+
+			<h5>Items:   {{order.get_cart_items}}</h5>
+			<h5>Total:   R{{order.get_cart_total|floatformat:2}}</h5>
+            <h5>Address:   {{shipping.address}}</h5>
+            <h5>Order ID:   {{order.id}}</h5>
+
+            {%else%}
+                <p> No previous orders to show </p>
+            {%endif%}
+		</div>
+	</div>
+</div>
+
+{% endblock content %}
+
+=======
     <div class="container">
         <div class="row">
             <div class="col-md-8">    
@@ -153,3 +189,4 @@
         </div>
     </div>
 {% endblock content %}                
+>>>>>>> 9a333c65998f3720acbb2fc2474f4e1b1e945c6e
