@@ -5,6 +5,26 @@ from ecommerce.models import Customer, Product, OrderItem, ShippingAddress
 from django.test.client import Client
 from ecommerce import views
 
+class TestLoginView(TestCase):
+
+    def setUp(self):
+        self.login_url = reverse('login')
+
+    def test_request_store(self):
+        response = self.client.get(self.login_rul)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/login.html')
+
+class TestLoginView(TestCase):
+
+    def setUp(self):
+        self.login_url = reverse('signup')
+
+    def test_request_store(self):
+        response = self.client.get(self.login_rul)
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'ecommerce/login.html')
+
 class TestStoreView(TestCase):
 
     def setUp(self):
@@ -34,7 +54,6 @@ class TestCartView(TestCase):
         response = self.client.get(self.cart_url)
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'ecommerce/cart.html')
-
 
 class TestCheckoutView(TestCase):
 
@@ -81,11 +100,11 @@ class TestOrderHistoryView(TestCase):
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
 
-class TestOrderHistoryView(TestCase):
+class TestWishListView(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.order_history_url = reverse('orderhistory')
+        self.order_history_url = reverse('wish_items')
         self.user = User.objects.create(username='django')
         self.user.set_password('12345')
         self.user.save()
@@ -94,5 +113,5 @@ class TestOrderHistoryView(TestCase):
     def test_request_checkout(self):
         response = self.client.get(self.order_history_url)
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'ecommerce/orderhistory.html')
+        self.assertTemplateUsed(response, 'ecommerce/wishlist.html')
 
