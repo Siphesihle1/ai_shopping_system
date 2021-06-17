@@ -425,10 +425,9 @@ def Logout(request):
 @login_required
 def order_history(request):
     u = request.user
-    #o= request.id
     customer = Customer.objects.get(user_id=u.id)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
-    shipping, created = ShippingAddress.objects.get_or_create(customer=customer, order=order.id)
+    shipping, created = ShippingAddress.objects.get_or_create(customer=customer, order_id=order)
 
     
     items = order.orderitem_set.all()
