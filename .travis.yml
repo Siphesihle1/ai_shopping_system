@@ -11,9 +11,9 @@ install:
 
  # command to run tests
 script:
-  - python manage.py makemigrations
+  - python manage.py makemigrations ecommerce
   - python manage.py migrate --fake
-  - python manage.py migrate
+  - python manage.py migrate ecommerce
   - coverage run manage.py test --noinput --keepdb --verbosity=2
 
 after_success:
