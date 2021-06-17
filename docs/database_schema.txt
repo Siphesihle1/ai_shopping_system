@@ -1,8 +1,9 @@
 Table Customer as C {
   id int [pk, increment]
   user varchar
-  name varchar
-  email varchar
+  cellphone varchar
+  latitude varchar
+  longitude varchar
 
 }
 
